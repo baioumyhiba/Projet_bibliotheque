@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque Numérique - Module C</title>
+    <!-- Basic CSS for presentation -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lang-switch button {
+            background: #555;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .lang-switch button:hover {
+            background: #777;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            height: 100%;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li a {
+            display: block;
+            padding: 15px;
+            color: #ecf0f1;
+            text-decoration: none;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .sidebar li a:hover {
+            background: #34495e;
+        }
+
+        .sidebar .icon {
+            margin-right: 10px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        /* Login Styles */
+        #login-section {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        /* Dashboard hidden by default */
+        #dashboard-section {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div data-i18n="app.title">Bibliothèque Numérique</div>
+        <div class="lang-switch">
+            <button onclick="switchLang('fr')">FR</button>
+            <button onclick="switchLang('en')">EN</button>
+            <button onclick="switchLang('ar')">AR</button>
+        </div>
+    </header>
+
+    <!-- Login View -->
+    <div id="login-section">
+        <h2 data-i18n="login.title">Connexion</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label data-i18n="login.username">Nom d'utilisateur</label>
+                <input type="text" id="username" required placeholder="Nom d'utilisateur"
+                    data-i18n-placeholder="login.username">
+            </div>
+            <div class="form-group">
+                <label data-i18n="login.password">Mot de passe</label>
+                <input type="password" id="password" required placeholder="Mot de passe"
+                    data-i18n-placeholder="login.password">
+            </div>
+            <p id="login-message"></p>
+            <button type="submit" class="btn" data-i18n="login.submit">Se connecter</button>
+        </form>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-section">
+        <div class="container">
+            <!-- Menu Container (Filled by XSLT) -->
+            <nav id="main-menu" class="sidebar"></nav>
+
+            <!-- Main Content -->
+            <main class="content">
+                <h2 data-i18n="welcome.message">Bienvenue</h2>
+                <p id="user-role-display" data-i18n="role.label"></p>
+                <hr>
+                <div id="workspace">
+                    <!-- Dynamic content would go here -->
+                    <p>Contenu du module...</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/permissions.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

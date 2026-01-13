@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<users xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="users.xsd">
+    <user>
+        <id>1</id>
+        <username>admin</username>
+        <password>admin123</password>
+        <email>admin@library.com</email>
+        <role>admin</role>
+    </user>
+    <user>
+        <id>2</id>
+        <username>user</username>
+        <password>user123</password>
+        <email>student@univ.edu</email>
+        <role>user</role>
+    </user>
+     <user>
+        <id>3</id>
+        <username>auteur</username>
+        <password>auteur123</password>
+        <email>auteur@univ.edu</email>
+        <role>auteur</role>
+    </user>
+</users>

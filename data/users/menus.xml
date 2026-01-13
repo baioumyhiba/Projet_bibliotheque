@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="menus.xsd">
+
+
+    <menu id="home" roles="admin user auteur">
+        <label key="menu.home">Accueil</label>
+        <link>#home</link>
+        <icon>🏠</icon>
+    </menu>
+
+    <menu id="consultation" roles="admin user auteur">
+        <label key="menu.consult">Consultation</label>
+        <link>#consultation</link>
+        <icon>📚</icon>
+    </menu>
+
+    <menu id="manage_books" roles="admin auteur">
+        <label key="menu.manage_books">Gestion Livres</label>
+        <link>#books</link>
+        <icon>📖</icon>
+    </menu>
+
+    <menu id="manage_authors" roles="admin">
+        <label key="menu.manage_authors">Gestion Auteurs</label>
+        <link>#authors</link>
+        <icon>✍️</icon>
+    </menu>
+
+    <menu id="manage_users" roles="admin">
+        <label key="menu.manage_users">Gestion Utilisateurs</label>
+        <link>#users</link>
+        <icon>👥</icon>
+    </menu>
+
+    <menu id="logout" roles="admin user auteur">
+        <label key="menu.logout">Déconnexion</label>
+        <link>#logout</link>
+        <icon>🚪</icon>
+    </menu>
+
+</menus>

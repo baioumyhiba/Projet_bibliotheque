@@ -1,0 +1,16 @@
+{
+    "app.title": "Digital Library",
+    "login.title": "Login",
+    "login.username": "Username",
+    "login.password": "Password",
+    "login.submit": "Log In",
+    "login.error": "Invalid credentials",
+    "menu.home": "Home",
+    "menu.consult": "Browse",
+    "menu.manage_books": "Manage Books",
+    "menu.manage_authors": "Manage Authors",
+    "menu.manage_users": "Manage Users",
+    "menu.logout": "Logout",
+    "welcome.message": "Welcome to the Digital Library",
+    "role.label": "Your role: "
+}
