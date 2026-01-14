@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="authors.xsl"?>
+
+<auteurs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="authors.xsd">
+
+    <!-- Littérature française -->
+    <auteur id="A1">
+        <nom>Victor Hugo</nom>
+        <pays>France</pays>
+        <livres>
+            <livreref idLivre="L1"/>
+            <livreref idLivre="L2"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A2">
+        <nom>Gustave Flaubert</nom>
+        <pays>France</pays>
+        <livres>
+            <livreref idLivre="L3"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A3">
+        <nom>Honoré de Balzac</nom>
+        <pays>France</pays>
+        <livres>
+            <livreref idLivre="L4"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A4">
+        <nom>Albert Camus</nom>
+        <pays>France</pays>
+        <livres>
+            <livreref idLivre="L5"/>
+        </livres>
+    </auteur>
+
+    <!-- Littérature marocaine -->
+    <auteur id="A5">
+        <nom>Ahmed Sefrioui</nom>
+        <pays>Maroc</pays>
+        <livres>
+            <livreref idLivre="L6"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A6">
+        <nom>Driss Chraïbi</nom>
+        <pays>Maroc</pays>
+        <livres>
+            <livreref idLivre="L7"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A7">
+        <nom>Mohammed Khair-Eddine</nom>
+        <pays>Maroc</pays>
+        <livres>
+            <livreref idLivre="L8"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A8">
+        <nom>Mohamed Choukri</nom>
+        <pays>Maroc</pays>
+        <livres>
+            <livreref idLivre="L9"/>
+        </livres>
+    </auteur>
+
+    <!-- Littérature mondiale -->
+    <auteur id="A9">
+        <nom>Miguel de Cervantès</nom>
+        <pays>Espagne</pays>
+        <livres>
+            <livreref idLivre="L10"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A10">
+        <nom>George Orwell</nom>
+        <pays>Royaume-Uni</pays>
+        <livres>
+            <livreref idLivre="L11"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A11">
+        <nom>Antoine de Saint-Exupéry</nom>
+        <pays>France</pays>
+        <livres>
+            <livreref idLivre="L12"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A12">
+        <nom>Fiodor Dostoïevski</nom>
+        <pays>Russie</pays>
+        <livres>
+            <livreref idLivre="L13"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A13">
+        <nom>Jane Austen</nom>
+        <pays>Royaume-Uni</pays>
+        <livres>
+            <livreref idLivre="L14"/>
+        </livres>
+    </auteur>
+
+    <!-- Histoire / Philosophie -->
+    <auteur id="A14">
+        <nom>Nicolas Machiavel</nom>
+        <pays>Italie</pays>
+        <livres>
+            <livreref idLivre="L15"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A15">
+        <nom>René Descartes</nom>
+        <pays>France</pays>
+        <livres>
+            <livreref idLivre="L16"/>
+        </livres>
+    </auteur>
+
+    <auteur id="A16">
+        <nom>Friedrich Nietzsche</nom>
+        <pays>Allemagne</pays>
+        <livres>
+            <livreref idLivre="L17"/>
+        </livres>
+    </auteur>
+
+</auteurs>

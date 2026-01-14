@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Image à gauche -->
+        <div class="left">
+            <img src="images/library.jpg" alt="Bibliothèque">
+        </div>
+
+        <!-- Formulaire à droite -->
+        <div class="right">
+            <h1>Connexion</h1>
+            <form id="loginForm">
+                <label>Email :</label>
+                <input type="email" id="email" placeholder="exemple@gmail.com" required>
+
+                <label>Mot de passe :</label>
+                <input type="password" id="password" placeholder="********" required>
+
+                <button type="submit">Se connecter</button>
+                <button type="button" id="signupBtn">S'inscrire</button>
+            </form>
+            <div id="loginMessage"></div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

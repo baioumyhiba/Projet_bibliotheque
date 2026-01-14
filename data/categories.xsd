@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Élément racine -->
+    <xs:element name="categories">
+        <xs:complexType>
+            <xs:sequence>
+                
+                <!-- Plusieurs catégories -->
+                <xs:element name="categorie" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="libelle" type="xs:string"/>
+                        </xs:sequence>
+
+                        <!-- Clé primaire -->
+                        <xs:attribute name="id" type="xs:ID" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
