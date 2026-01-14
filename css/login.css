@@ -1,0 +1,108 @@
+/* Corps de la page */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Conteneur principal */
+.container {
+    display: flex;
+    width: 800px;
+    height: 500px;
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Partie gauche - image */
+.left {
+    flex: 1;
+    background-color: #333;
+}
+
+.left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Partie droite - formulaire */
+.right {
+    flex: 1;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Titre */
+.right h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Labels et inputs */
+.right label {
+    margin-bottom: 5px;
+    display: block;
+    color: #555;
+}
+
+.right input[type="email"],
+.right input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Boutons */
+.right button {
+    width: 48%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.right button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.right button#signupBtn {
+    background-color: #2196F3;
+    color: white;
+    float: right;
+}
+
+/* Message d'erreur ou succès */
+#loginMessage {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: red;
+}
+
+/* Hover sur boutons */
+.right button:hover {
+    opacity: 0.9;
+}
+
+/* Nettoyage float */
+.right form::after {
+    content: "";
+    display: table;
+    clear: both;
+}

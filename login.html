@@ -2,11 +2,23 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Bibliothèque Numérique</title>
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <div class="container">
+
+    <!-- HEADER -->
+    <header class="top-header">
+        <div class="title" data-i18n="app.title">Bibliothèque Numérique</div>
+        <div class="lang-switch">
+            <button onclick="switchLang('fr')">FR</button>
+            <button onclick="switchLang('en')">EN</button>
+            <button onclick="switchLang('ar')">AR</button>
+        </div>
+    </header>
+
+    <!-- LOGIN VIEW -->
+    <div id="login-section" class="container">
         <!-- Image à gauche -->
         <div class="left">
             <img src="images/library.jpg" alt="Bibliothèque">
@@ -14,21 +26,57 @@
 
         <!-- Formulaire à droite -->
         <div class="right">
-            <h1>Connexion</h1>
-            <form id="loginForm">
-                <label>Email :</label>
-                <input type="email" id="email" placeholder="exemple@gmail.com" required>
+            <h1 data-i18n="login.title">Connexion</h1>
 
-                <label>Mot de passe :</label>
-                <input type="password" id="password" placeholder="********" required>
+            <form id="login-form">
+                <label data-i18n="login.username">Nom d'utilisateur</label>
+                <input type="text"
+                       id="username"
+                       required
+                       placeholder="Nom d'utilisateur"
+                       data-i18n-placeholder="login.username">
 
-                <button type="submit">Se connecter</button>
-                <button type="button" id="signupBtn">S'inscrire</button>
+                <label data-i18n="login.password">Mot de passe</label>
+                <input type="password"
+                       id="password"
+                       required
+                       placeholder="Mot de passe"
+                       data-i18n-placeholder="login.password">
+
+                <button type="submit" data-i18n="login.submit">
+                    Se connecter
+                </button>
             </form>
-            <div id="loginMessage"></div>
+
+            <p id="login-message"></p>
         </div>
     </div>
 
+    <!-- DASHBOARD VIEW -->
+    <div id="dashboard-section" style="display:none;">
+        <div class="container dashboard-container">
+
+            <!-- Menu (XSLT) -->
+            <nav id="main-menu" class="sidebar"></nav>
+
+            <!-- Contenu principal -->
+            <main class="content">
+                <h2 data-i18n="welcome.message">Bienvenue</h2>
+                <p id="user-role-display" data-i18n="role.label"></p>
+                <hr>
+
+                <div id="workspace">
+                    <p>Contenu du module...</p>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="js/permissions.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+
 </body>
 </html>
