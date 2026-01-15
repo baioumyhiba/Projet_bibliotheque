@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bibliothèque</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Popup Détail -->
+<div id="book-details" class="popup" style="display:none;">
+    <span class="close" onclick="closeDetails()">&times;</span>
+    <h2 id="detail-title"></h2>
+    <img id="detail-img" src="" alt="">
+    <p id="detail-desc"></p>
+</div>
+
+<!-- Conteneur des livres -->
+<div id="booksContainer"></div>
+
+<!-- Popup Modifier / Ajouter -->
+<div id="edit-modal" class="popup" style="display:none; padding:20px; background:#fff; border:1px solid #ccc; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1000;">
+    <span style="cursor:pointer; float:right;" onclick="closeEditModal()">&times;</span>
+    <h2 id="edit-modal-title"></h2>
+    <form id="edit-form">
+        <label>Titre:</label><br/><input type="text" id="edit-titre" required><br/>
+        <label>Auteur:</label><br/><input type="text" id="edit-auteur" required><br/>
+        <label>Description:</label><br/><textarea id="edit-desc" required></textarea><br/>
+        <label>Image URL:</label><br/><input type="text" id="edit-img" required><br/>
+        <button type="submit">Enregistrer</button>
+    </form>
+</div>
+
+
+<script src="js/books.js"></script>
+</body>
+</html>

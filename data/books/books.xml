@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="books.xsl"?>
+
+<livres xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="books.xsd">
+
+    <!-- 🇫🇷 Littérature française -->
+    <livre idLivre="L1">
+        <titre>Les Misérables</titre>
+        <anneePublication>1862</anneePublication>
+        <description>Les Misérables est un roman de Victor Hugo, publié en 1862, qui raconte l’histoire de personnes pauvres et marginalisées dans la France du XIXᵉ siècle. Le personnage principal, Jean Valjean, est un ancien prisonnier condamné pour avoir volé du pain afin de nourrir sa famille. Après sa libération, il tente de se reconstruire et de devenir un homme juste, mais il est poursuivi toute sa vie par l’inspecteur Javert, symbole d’une justice rigide et sans compassion. À travers des personnages comme Fantine, Cosette et Marius, le roman montre la misère sociale, l’injustice et les inégalités de l’époque. L’œuvre défend des valeurs fortes comme la justice, la solidarité, le pardon et l’espoir, tout en dénonçant la pauvreté et l’oppression sociale.</description>
+       <image>images/les_miserables.jpg</image>
+        <isbn>9782070409189</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A1"/>
+        </authors>
+        <categories>
+            <categorieRef id="C1"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L2">
+        <titre>Notre-Dame de Paris</titre>
+        <anneePublication>1831</anneePublication>
+        <description>Notre-Dame de Paris est un roman de Victor Hugo, publié en 1831, qui se déroule à Paris au XVe siècle, autour de la célèbre cathédrale Notre-Dame. L’histoire met en scène Quasimodo, le sonneur de cloches difforme et solitaire, Esmeralda, une jeune danseuse bohémienne, et Claude Frollo, l’archidiacre tourmenté. À travers leurs destins tragiques, le roman explore des thèmes comme l’amour impossible, la fatalité, la différence et l’injustice sociale. Victor Hugo utilise cette œuvre pour dénoncer l’intolérance et la cruauté de la société envers ceux qui sont différents, tout en rendant hommage à l’architecture gothique et au patrimoine de Paris.</description>
+        <image>images/Notre-Dame-de-Paris.jpg</image>
+        <isbn>9782070409196</isbn>
+        <disponibilite>false</disponibilite>
+        <authors>
+            <auteurRef id="A1"/>
+        </authors>
+        <categories>
+            <categorieRef id="C1"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L3">
+        <titre>Madame Bovary</titre>
+        <anneePublication>1857</anneePublication>
+        <description>Madame Bovary est un roman de Gustave Flaubert, publié en 1857, qui raconte l’histoire d’Emma Bovary, une jeune femme mariée à Charles Bovary, un médecin de campagne simple et ordinaire. Rêvant d’une vie passionnée et luxueuse, Emma s’ennuie dans son mariage et cherche le bonheur à travers des relations amoureuses et une vie de dépenses excessives. Ses illusions romantiques la conduisent peu à peu à des dettes et à une profonde détresse. À travers ce roman, Flaubert critique le romantisme excessif, l’ennui de la vie provinciale et les illusions sociales, tout en montrant les conséquences tragiques du décalage entre les rêves et la réalité.</description>
+         <image>images/3.jpg</image>
+        <isbn>9782070413117</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A2"/>
+        </authors>
+        <categories>
+            <categorieRef id="C1"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L4">
+        <titre>Le Père Goriot</titre>
+        <anneePublication>1835</anneePublication>
+        <description>Le Père Goriot est un roman de Honoré de Balzac, publié en 1835, qui se déroule dans le Paris du XIXᵉ siècle. Il raconte l’histoire de Goriot, un ancien commerçant ruiné après avoir sacrifié toute sa fortune pour assurer le bonheur de ses deux filles, qui finissent par l’abandonner. Le roman suit aussi le parcours de Rastignac, un jeune étudiant ambitieux découvrant la dureté et l’hypocrisie de la société parisienne. À travers cette œuvre, Balzac dénonce l’égoïsme, l’ambition sociale et la domination de l’argent, tout en montrant la tragédie de l’amour paternel poussé à l’extrême.</description>
+        <image>images/4.jpg</image>
+        <isbn>9782070419126</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A3"/>
+        </authors>
+        <categories>
+            <categorieRef id="C1"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L5">
+        <titre>L’Étranger</titre>
+        <anneePublication>1942</anneePublication>
+        <description>L’Étranger est un roman de Albert Camus, publié en 1942, qui raconte l’histoire de Meursault, un homme indifférent aux normes sociales. Après la mort de sa mère, son absence d’émotion choque son entourage. Plus tard, il commet un meurtre sans motivation claire et est jugé davantage pour son comportement que pour son acte. À travers ce personnage, Camus illustre la philosophie de l’absurde, montrant le décalage entre l’homme et le monde, ainsi que l’injustice d’une société qui condamne ce qu’elle ne comprend pas.</description>
+         <image>images/5.jpg</image>
+        <isbn>9782070360022</isbn>
+        <disponibilite>false</disponibilite>
+        <authors>
+            <auteurRef id="A4"/>
+        </authors>
+        <categories>
+            <categorieRef id="C1"/>
+        </categories>
+    </livre>
+
+    <!-- 🇲🇦 Littérature marocaine -->
+    <livre idLivre="L6">
+        <titre>La Boîte à merveilles</titre>
+        <anneePublication>1954</anneePublication>
+        <description>a Boîte à merveilles est un roman autobiographique de Ahmed Sefrioui, publié en 1954, qui raconte l’enfance de Sidi Mohammed, un jeune garçon vivant dans la médina de Fès. À travers son regard d’enfant, l’auteur décrit la vie quotidienne, les traditions, les fêtes et les difficultés sociales du Maroc traditionnel. La « boîte à merveilles » est un objet symbolique dans lequel l’enfant conserve des souvenirs et des objets qui l’aident à s’évader de la solitude et de la tristesse. L’œuvre met en valeur la mémoire, l’imagination et la culture marocaine, tout en évoquant la pauvreté et la condition humaine avec sensibilité.</description>
+        <image>images/6.jpg</image>
+        <isbn>9789954190197</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A5"/>
+        </authors>
+        <categories>
+            <categorieRef id="C2"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L7">
+        <titre>Le Passé simple</titre>
+        <anneePublication>1954</anneePublication>
+        <description>Le Passé simple est un roman autobiographique de Driss Chraïbi, publié en 1954, qui raconte la révolte d’un jeune garçon contre l’autorité familiale et sociale. Le narrateur, appelé Driss, grandit dans une famille marocaine traditionnelle dominée par un père autoritaire et violent. À travers son regard critique, le roman dénonce le patriarcat, l’oppression, l’hypocrisie sociale et certaines traditions rigides. Cette œuvre marque une rupture avec la littérature marocaine classique et exprime un fort désir de liberté, de modernité et de remise en question des valeurs établies.</description>
+         <image>images/7.jpg</image>
+        <isbn>9789954190203</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A6"/>
+        </authors>
+        <categories>
+            <categorieRef id="C2"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L8">
+        <titre>Il était une fois un vieux couple heureux</titre>
+        <anneePublication>2001</anneePublication>
+        <description>Il était une fois un vieux couple heureux est un roman de Mohammed Khaïr‑Eddine, publié en 2002, qui raconte la vie simple et paisible d’un vieux couple vivant dans un village berbère du Maroc. Le mari, Bouchaïb, consacre ses journées à écrire un poème célébrant un saint, tandis que sa femme s’occupe du foyer et des traditions quotidiennes. À travers leur quotidien, le roman célèbre la sagesse populaire, les coutumes amazighes et la résistance culturelle face à la modernité. Cette œuvre offre un regard poétique sur la vie rurale marocaine et souligne l’importance de la mémoire, de la transmission et de l’harmonie avec la nature.</description>
+         <image>images/8.jpg</image>
+        <isbn>9789954190210</isbn>
+        <disponibilite>false</disponibilite>
+        <authors>
+            <auteurRef id="A7"/>
+        </authors>
+        <categories>
+            <categorieRef id="C2"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L9">
+        <titre>Le Pain nu</titre>
+        <anneePublication>1973</anneePublication>
+        <description>Le Pain nu est un roman autobiographique de Mohammed Choukri, publié en 1973, qui raconte l’enfance et la jeunesse difficiles de l’auteur dans la ville de Tanger. Orphelin et pauvre, Mohammed Choukri grandit dans la misère, confronté à la faim, à la violence et à l’errance. À travers son récit cru et sincère, le roman dénonce les injustices sociales, la pauvreté extrême et l’exclusion des plus vulnérables. Cette œuvre, marquée par un réalisme brutal, exprime la lutte pour la survie et la quête d’identité dans un environnement hostile, tout en offrant un témoignage poignant sur la condition humaine au Maroc du XXᵉ siècle.</description>
+        <image>images/9.jpg</image>
+        <isbn>9789954190227</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A8"/>
+        </authors>
+        <categories>
+            <categorieRef id="C2"/>
+        </categories>
+    </livre>
+
+    <!-- 🌍 Littérature mondiale -->
+    <livre idLivre="L10">
+        <titre>Don Quichotte</titre>
+        <anneePublication>1605</anneePublication>
+        <description>Don Quichotte est un roman de Miguel de Cervantes, publié en deux parties en 1605 et 1615, qui raconte les aventures de Don Quichotte, un noble espagnol obsédé par les romans de chevalerie, et de son fidèle écuyer Sancho Panza. Décidant de devenir chevalier errant, Don Quichotte parcourt la campagne pour défendre la justice, combattre le mal et protéger les opprimés, mais ses idéaux le conduisent souvent à des situations comiques ou absurdes. À travers ce récit, le roman critique les illusions et les excès des idéaux chevaleresques, tout en explorant les thèmes de la folie, de la réalité versus l’illusion et de la condition humaine. Cette œuvre, mêlant humour et réflexion philosophique, est considérée comme l’un des fondements de la littérature moderne.</description>
+        <image>images/10.jpg</image>
+        <isbn>9782070409219</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A9"/>
+        </authors>
+        <categories>
+            <categorieRef id="C3"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L11">
+        <titre>1984</titre>
+        <anneePublication>1949</anneePublication>
+        <description>1984 est un roman de George Orwell, publié en 1949, qui raconte l’histoire de Winston Smith, un homme vivant dans un État totalitaire où le Parti contrôle chaque aspect de la vie et où la surveillance est constante. Winston travaille au ministère de la Vérité, falsifiant l’histoire, mais il rêve de liberté et d’indépendance. À travers son parcours, le roman dénonce la dictature, la censure, la manipulation de l’information et la perte des libertés individuelles. Cette œuvre, sombre et prophétique, met en lumière les dangers du totalitarisme et de l’endoctrinement, tout en explorant les thèmes de la rébellion, de la vérité et de la résistance face à l’oppression.</description>
+         <image>images/11.jpg</image>
+        <isbn>9782070368226</isbn>
+        <disponibilite>false</disponibilite>
+        <authors>
+            <auteurRef id="A10"/>
+        </authors>
+        <categories>
+            <categorieRef id="C3"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L12">
+        <titre>Le Petit Prince</titre>
+        <anneePublication>1943</anneePublication>
+        <description>Le Petit Prince est un roman de Antoine de Saint-Exupéry, publié en 1943, qui raconte l’histoire d’un jeune prince venant d’une petite planète et voyageant à travers l’univers. Lors de ses aventures, il rencontre différents personnages symboliques et fait la rencontre d’un aviateur, avec qui il partage ses réflexions sur la vie, l’amitié et l’amour. À travers ce récit poétique et philosophique, le roman explore des thèmes tels que l’innocence de l’enfance, la solitude, la valeur des relations humaines et la recherche du sens de la vie. Cette œuvre, tendre et universelle, invite à réfléchir sur l’essentiel et la beauté des choses simples, tout en restant accessible aux enfants comme aux adultes.</description>
+        <image>images/12.jpg</image>
+        <isbn>9782070612756</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A11"/>
+        </authors>
+        <categories>
+            <categorieRef id="C3"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L13">
+        <titre>Crime et Châtiment</titre>
+        <anneePublication>1866</anneePublication>
+        <description>Crime et Châtiment est un roman de Fiodor Dostoïevski, publié en 1866, qui raconte l’histoire de Rodion Raskolnikov, un jeune étudiant pauvre à Saint-Pétersbourg, qui tue une vieille prêteuse sur gages pour s’emparer de son argent. À travers ses tourments et sa culpabilité, le roman explore la psychologie du crime, le remords, la morale et la justice sociale. Cette œuvre, intense et philosophique, dénonce les inégalités de la société russe du XIXᵉ siècle et met en lumière les luttes internes entre le bien et le mal, tout en analysant la condition humaine et la rédemption possible par la souffrance et le repentir.</description>
+        <image>images/13.jpg</image>
+        <isbn>9782070413544</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A12"/>
+        </authors>
+        <categories>
+            <categorieRef id="C3"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L14">
+        <titre>Orgueil et Préjugés</titre>
+        <anneePublication>1813</anneePublication>
+        <description>Orgueil et Préjugés est un roman de Jane Austen, publié en 1813, qui raconte l’histoire d’Elizabeth Bennet, une jeune femme vive et intelligente, et de M. Darcy, un homme riche et réservé. À travers leurs rencontres et malentendus, le roman explore les préjugés sociaux, les différences de classe et les jugements hâtifs, tout en mettant en lumière les émotions, les ambitions et les comportements humains. Cette œuvre, à la fois romantique et satirique, critique les conventions sociales de l’Angleterre du XIXᵉ siècle et célèbre l’amour véritable, la raison et la capacité à dépasser les préjugés pour mieux comprendre autrui.</description>
+       <image>images/14.jpg</image>
+        <isbn>9782070414329</isbn>
+        <disponibilite>false</disponibilite>
+        <authors>
+            <auteurRef id="A13"/>
+        </authors>
+        <categories>
+            <categorieRef id="C3"/>
+        </categories>
+    </livre>
+
+    <!-- 📖 Histoire / Philosophie -->
+    <livre idLivre="L15">
+        <titre>Le Prince</titre>
+        <anneePublication>1532</anneePublication>
+        <description>Le Prince est un traité politique de Niccolò Machiavel, publié en 1532, qui analyse les stratégies de pouvoir et la manière de gouverner efficacement un État. L’auteur y décrit les comportements que doit adopter un prince pour conserver le pouvoir, gérer les alliances et les ennemis, et maintenir l’ordre dans son royaume. À travers cet ouvrage, Machiavel met en lumière la réalité politique, parfois cruelle ou pragmatique, en détachant la morale traditionnelle des décisions de gouvernement. Cette œuvre, fondatrice de la science politique moderne, souligne la complexité du pouvoir et la nécessité de combiner prudence, ruse et autorité pour réussir en politique.</description>
+       <image>images/15.jpg</image>
+        <isbn>9782070417993</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A14"/>
+        </authors>
+        <categories>
+            <categorieRef id="C4"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L16">
+        <titre>Discours de la méthode</titre>
+        <anneePublication>1637</anneePublication>
+        <description>Discours de la méthode est un ouvrage philosophique de René Descartes, publié en 1637, qui expose la méthode que l’auteur propose pour atteindre la vérité et le savoir certain. Descartes y décrit sa démarche de doute méthodique, affirmant qu’il faut remettre en question toutes les connaissances reçues pour ne retenir que ce qui est clair et indubitable. À travers cet essai, il pose les fondements du raisonnement scientifique et de la philosophie moderne, en insistant sur la rationalité, la logique et la capacité de l’esprit humain à comprendre le monde. Cette œuvre, à la fois pratique et théorique, marque une étape majeure dans l’histoire de la pensée occidentale et de la méthode scientifique.</description>
+         <image>images/16.jpg</image>
+        <isbn>9782070418006</isbn>
+        <disponibilite>true</disponibilite>
+        <authors>
+            <auteurRef id="A15"/>
+        </authors>
+        <categories>
+            <categorieRef id="C4"/>
+        </categories>
+    </livre>
+
+    <livre idLivre="L17">
+        <titre>Ainsi parlait Zarathoustra</titre>
+        <anneePublication>1883</anneePublication>
+        <description>Ainsi parlait Zarathoustra est un roman-philosophique de Friedrich Nietzsche, publié entre 1883 et 1885, qui raconte le voyage et les discours de Zarathoustra, un prophète qui prêche des idées nouvelles sur l’homme et la société. À travers ses enseignements, le livre explore des thèmes tels que le surhomme, la volonté de puissance, la transcendance des valeurs traditionnelles et le sens de la vie. Cette œuvre, poétique et symbolique, critique la morale conventionnelle, les religions établies et les illusions sociales, tout en invitant l’homme à se créer ses propres valeurs et à vivre de manière authentique.</description>
+         <image>images/17.jpg</image>
+        <isbn>9782070418013</isbn>
+        <disponibilite>false</disponibilite>
+        <authors>
+            <auteurRef id="A16"/>
+        </authors>
+        <categories>
+            <categorieRef id="C4"/>
+        </categories>
+    </livre>
+
+</livres>

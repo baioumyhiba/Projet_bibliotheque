@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Déclaration du type booléen simple -->
+    <xs:simpleType name="booleanType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="true"/>
+            <xs:enumeration value="false"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Déclaration du type pour auteurRef -->
+    <xs:complexType name="auteurRefType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <!-- Déclaration du type pour categorieRef -->
+    <xs:complexType name="categorieRefType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+
+    <!-- Type livre -->
+    <xs:complexType name="livreType">
+        <xs:sequence>
+            <xs:element name="titre" type="xs:string"/>
+            <xs:element name="anneePublication" type="xs:integer"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="image" type="xs:string" minOccurs="0"/>
+            <xs:element name="isbn" type="xs:string"/>
+            <xs:element name="disponibilite" type="booleanType"/>
+            <xs:element name="authors">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="auteurRef" type="auteurRefType" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="categories">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="categorieRef" type="categorieRefType" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="idLivre" type="xs:ID" use="required"/>
+    </xs:complexType>
+
+    <!-- Élément racine -->
+    <xs:element name="livres">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="livre" type="livreType" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
