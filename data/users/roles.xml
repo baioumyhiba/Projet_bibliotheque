@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<roles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="roles.xsd">
+    <role>
+        <id>admin</id>
+        <name>Administrateur</name>
+        <description>Gestion complète du système</description>
+    </role>
+    <role>
+        <id>user</id>
+        <name>Utilisateur</name>
+        <description>Consultation des livres et auteurs</description>
+    </role>
+        <role>
+        <id>auteur</id>
+        <name>auteur</name>
+        <description>Ajout et modification de ses propres livres</description>
+    </role>
+</roles>

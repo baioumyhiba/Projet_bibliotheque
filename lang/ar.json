@@ -1,0 +1,16 @@
+{
+    "app.title": "المكتبة الرقمية",
+    "login.title": "تسجيل الدخول",
+    "login.username": "اسم المستخدم",
+    "login.password": "كلمة المرور",
+    "login.submit": "دخول",
+    "login.error": "بيانات الاعتماد غير صالحة",
+    "menu.home": "الرئيسية",
+    "menu.consult": "تصفح",
+    "menu.manage_books": "إدارة الكتب",
+    "menu.manage_authors": "إدارة المؤلفين",
+    "menu.manage_users": "إدارة المستخدمين",
+    "menu.logout": "خروج",
+    "welcome.message": "مرحباً بكم في المكتبة الرقمية",
+    "role.label": "دورك: "
+}

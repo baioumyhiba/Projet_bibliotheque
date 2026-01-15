@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Définition d'une référence de livre -->
+    <xs:element name="livreref">
+        <xs:complexType>
+            <xs:attribute name="idLivre" type="xs:IDREF" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Définition de la liste de livres pour un auteur -->
+    <xs:element name="livres">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="livre" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Définition d'un auteur -->
+    <xs:element name="auteur">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="nom" type="xs:string"/>
+                <xs:element name="pays" type="xs:string"/>
+                <xs:element ref="livres"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Racine : liste des auteurs -->
+    <xs:element name="auteurs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="auteur" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,16 @@
+{
+    "app.title": "Bibliothèque Numérique",
+    "login.title": "Connexion",
+    "login.username": "Nom d'utilisateur",
+    "login.password": "Mot de passe",
+    "login.submit": "Se connecter",
+    "login.error": "Identifiants incorrects",
+    "menu.home": "Accueil",
+    "menu.consult": "Consultation",
+    "menu.manage_books": "Gestion Livres",
+    "menu.manage_authors": "Gestion Auteurs",
+    "menu.manage_users": "Gestion Utilisateurs",
+    "menu.logout": "Déconnexion",
+    "welcome.message": "Bienvenue dans la bibliothèque numérique",
+    "role.label": "Votre rôle : "
+}

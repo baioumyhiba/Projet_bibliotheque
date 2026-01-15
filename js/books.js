@@ -25,11 +25,11 @@ function loadXSLT(xml, xslFile, outputId){
 
 window.onload = function() {
     const xhttpXML = new XMLHttpRequest();
-    xhttpXML.open("GET", "data/books/books.xml", true);
+    xhttpXML.open("GET", "data/books.xml", true);
     xhttpXML.onreadystatechange = function() {
         if(xhttpXML.readyState === 4 && xhttpXML.status === 200){
             xmlData = xhttpXML.responseXML;
-            loadXSLT(xmlData, "data/books/books.xsl", "booksContainer");
+            loadXSLT(xmlData, "data/books.xsl", "booksContainer");
         }
     }
     xhttpXML.send();
@@ -80,7 +80,7 @@ function deleteBook(titre){
     const livre = livres.find(l => l.getElementsByTagName('titre')[0].textContent === titre);
     if(livre){
         xmlData.documentElement.removeChild(livre);
-        loadXSLT(xmlData, "data/books/books.xsl", "booksContainer");
+        loadXSLT(xmlData, "data/books.xsl", "booksContainer");
     }
 }
 
@@ -119,7 +119,7 @@ document.getElementById('edit-form').addEventListener('submit', function(e){
 
     currentEditBook = null;
     closeEditModal();
-    loadXSLT(xmlData, "data/books/books.xsl", "booksContainer");
+    loadXSLT(xmlData, "data/books.xsl", "booksContainer");
 
     // ⚠️ Pour sauvegarder dans le fichier XML réel, il faut envoyer xmlData à un backend
 });
