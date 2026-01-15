@@ -6,77 +6,42 @@
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-
     <!-- HEADER -->
     <header class="top-header">
         <div class="title" data-i18n="app.title">Bibliothèque Numérique</div>
         <div class="lang-switch">
-            <button onclick="switchLang('fr')">FR</button>
-            <button onclick="switchLang('en')">EN</button>
-            <button onclick="switchLang('ar')">AR</button>
+            <select id="language-select" onchange="switchLang(this.value)">
+                <option value="fr" selected>Français</option>
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+            </select>
         </div>
     </header>
-
     <!-- LOGIN VIEW -->
     <div id="login-section" class="container">
-        <!-- Image à gauche -->
+        <!-- Partie gauche - IMAGE -->
         <div class="left">
             <img src="images/library.jpg" alt="Bibliothèque">
         </div>
-
-        <!-- Formulaire à droite -->
+        <!-- Partie droite - formulaire -->
         <div class="right">
             <h1 data-i18n="login.title">Connexion</h1>
-
             <form id="login-form">
                 <label data-i18n="login.username">Nom d'utilisateur</label>
-                <input type="text"
-                       id="username"
-                       required
-                       placeholder="Nom d'utilisateur"
-                       data-i18n-placeholder="login.username">
-
+                <input type="text" id="username" required placeholder="Nom d'utilisateur" data-i18n-placeholder="login.username">
                 <label data-i18n="login.password">Mot de passe</label>
-                <input type="password"
-                       id="password"
-                       required
-                       placeholder="Mot de passe"
-                       data-i18n-placeholder="login.password">
-
-                <button type="submit" data-i18n="login.submit">
-                    Se connecter
-                </button>
+                <input type="password" id="password" required placeholder="Mot de passe" data-i18n-placeholder="login.password">
+                <div class="form-buttons">
+                    <button type="submit" class="login-btn" data-i18n="login.submit">Se connecter</button>
+                    <button type="button" class="register-btn" id="register-btn" data-i18n="login.register">S'inscrire</button>
+                </div>
             </form>
-
             <p id="login-message"></p>
         </div>
     </div>
-
-    <!-- DASHBOARD VIEW -->
-    <div id="dashboard-section" style="display:none;">
-        <div class="container dashboard-container">
-
-            <!-- Menu (XSLT) -->
-            <nav id="main-menu" class="sidebar"></nav>
-
-            <!-- Contenu principal -->
-            <main class="content">
-                <h2 data-i18n="welcome.message">Bienvenue</h2>
-                <p id="user-role-display" data-i18n="role.label"></p>
-                <hr>
-
-                <div id="workspace">
-                    <p>Contenu du module...</p>
-                </div>
-            </main>
-
-        </div>
-    </div>
-
     <!-- SCRIPTS -->
     <script src="js/permissions.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
-
 </body>
 </html>

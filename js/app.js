@@ -1,5 +1,5 @@
 const App = {
-    currentLang: 'fr',
+    currentLang: localStorage.getItem('selectedLang') || 'fr', // Charge la langue sauvegardée ou 'fr' par défaut
     translations: {},
 
     init: async function () {
@@ -28,10 +28,19 @@ const App = {
      */
     loadLanguage: async function (lang) {
         this.currentLang = lang;
+        // Sauvegarder la langue dans localStorage
+        localStorage.setItem('selectedLang', lang);
+        
         // Update html lang attribute
         document.documentElement.setAttribute('lang', lang);
         // Manage direction for RTL languages
         document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+        // Mettre à jour le sélecteur de langue pour refléter la langue actuelle
+        const langSelect = document.getElementById('language-select');
+        if (langSelect) {
+            langSelect.value = lang;
+        }
 
         try {
             const resp = await fetch(`lang/${lang}.json`);
@@ -89,7 +98,8 @@ const App = {
         try {
             const user = await Auth.login(userIn, passIn);
             msgEl.textContent = "";
-            this.showDashboard(user);
+            // Redirection automatique vers dashboard.html après connexion
+            window.location.href = "dashboard.html";
         } catch (err) {
             msgEl.textContent = this.translations['login.error'] || "Error";
             msgEl.style.color = 'red';
@@ -104,12 +114,15 @@ const App = {
     },
 
     showDashboard: async function (user) {
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('dashboard-section').style.display = 'block';
+        const loginSection = document.getElementById('login-section');
+        if (loginSection) loginSection.style.display = 'none';
+        const dashSection = document.getElementById('dashboard-section');
+        if (dashSection) dashSection.style.display = 'block';
 
         // Update Welcome Message
         const roleLabel = this.translations['role.label'] || "Role: ";
-        document.getElementById('user-role-display').textContent = roleLabel + (user.roleName || user.role);
+        const userRoleDisplay = document.getElementById('user-role-display');
+        if (userRoleDisplay) userRoleDisplay.textContent = roleLabel + (user.roleName || user.role);
 
         // Render Menu via XSLT
         await this.renderMenu(user.role);
@@ -160,13 +173,39 @@ const App = {
 
 // Start
 window.addEventListener('DOMContentLoaded', () => {
-    App.init();
+    const isLoginPage = !!document.getElementById('login-section');
+    const isDashboardPage = !!document.getElementById('dashboard-section');
+
+    if (isLoginPage) {
+        const user = Auth.checkSession();
+        if (user) {
+            window.location.href = "dashboard.html";
+        } else {
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) loginForm.addEventListener('submit', App.handleLogin.bind(App));
+            App.loadLanguage(App.currentLang);
+        }
+    }
+    
+    if (isDashboardPage) {
+        const user = Auth.checkSession();
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+        App.loadLanguage(App.currentLang);
+        App.showDashboard(user);
+    }
 });
 
 // Global helpers for HTML onclick
 window.switchLang = (l) => App.switchLang(l);
 window.logout = () => App.logout();
 window.navigate = (hash) => {
-    // Determine access logic or simple show/hide
+    if (hash === '#logout') {
+        App.logout();
+        return;
+    }
+    // Autres actions de navigation (modules etc)
     console.log("Navigating to", hash);
 };

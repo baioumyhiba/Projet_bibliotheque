@@ -83,8 +83,9 @@ const Auth = {
      */
     logout: function () {
         this.currentUser = null;
-        sessionStorage.removeItem('user');
-        window.location.reload();
+        sessionStorage.clear(); // Efface TOUTE session utilisateur (propre !)
+        // Redirection automatique vers login.html après déconnexion
+        window.location.href = 'login.html';
     },
 
     /**
