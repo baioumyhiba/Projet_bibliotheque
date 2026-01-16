@@ -1,24 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="books.xsl"?>
-
-<livres xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="books.xsd">
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="books.xsl"?><livres xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="books.xsd">
 
     <!-- 🇫🇷 Littérature française -->
-    <livre idLivre="L1">
-        <titre>Les Misérables</titre>
-        <anneePublication>1862</anneePublication>
-        <description>Les Misérables est un roman de Victor Hugo, publié en 1862, qui raconte l’histoire de personnes pauvres et marginalisées dans la France du XIXᵉ siècle. Le personnage principal, Jean Valjean, est un ancien prisonnier condamné pour avoir volé du pain afin de nourrir sa famille. Après sa libération, il tente de se reconstruire et de devenir un homme juste, mais il est poursuivi toute sa vie par l’inspecteur Javert, symbole d’une justice rigide et sans compassion. À travers des personnages comme Fantine, Cosette et Marius, le roman montre la misère sociale, l’injustice et les inégalités de l’époque. L’œuvre défend des valeurs fortes comme la justice, la solidarité, le pardon et l’espoir, tout en dénonçant la pauvreté et l’oppression sociale.</description>
-       <image>images/les_miserables.jpg</image>
-        <isbn>9782070409189</isbn>
-        <disponibilite>true</disponibilite>
-        <authors>
-            <auteurRef id="A1"/>
-        </authors>
-        <categories>
-            <categorieRef id="C1"/>
-        </categories>
-    </livre>
+    
 
     <livre idLivre="L2">
         <titre>Notre-Dame de Paris</titre>
@@ -27,13 +10,11 @@
         <image>images/Notre-Dame-de-Paris.jpg</image>
         <isbn>9782070409196</isbn>
         <disponibilite>false</disponibilite>
-        <authors>
-            <auteurRef id="A1"/>
-        </authors>
+        
         <categories>
             <categorieRef id="C1"/>
         </categories>
-    </livre>
+    <authors><auteurRef id="INDISPO"/></authors></livre>
 
     <livre idLivre="L3">
         <titre>Madame Bovary</titre>
@@ -241,7 +222,7 @@
         <isbn>9782070418006</isbn>
         <disponibilite>true</disponibilite>
         <authors>
-            <auteurRef id="A15"/>
+            <auteurRef id="A14"/>
         </authors>
         <categories>
             <categorieRef id="C4"/>
@@ -256,7 +237,7 @@
         <isbn>9782070418013</isbn>
         <disponibilite>false</disponibilite>
         <authors>
-            <auteurRef id="A16"/>
+            <auteurRef id="INDISPO"/>
         </authors>
         <categories>
             <categorieRef id="C4"/>

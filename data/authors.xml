@@ -1,18 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="authors.xsl"?>
-
-<auteurs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="authors.xsd">
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="authors.xsl"?><auteurs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="authors.xsd">
 
     <!-- Littérature française -->
-    <auteur id="A1">
-        <nom>Victor Hugo</nom>
-        <pays>France</pays>
-        <livres>
-            <livreref idLivre="L1"/>
-            <livreref idLivre="L2"/>
-        </livres>
-    </auteur>
+    
 
     <auteur id="A2">
         <nom>Gustave Flaubert</nom>
@@ -118,23 +107,12 @@
         <pays>Italie</pays>
         <livres>
             <livreref idLivre="L15"/>
-        </livres>
+        <livreref idLivre="L16"/></livres>
     </auteur>
 
-    <auteur id="A15">
-        <nom>René Descartes</nom>
-        <pays>France</pays>
-        <livres>
-            <livreref idLivre="L16"/>
-        </livres>
-    </auteur>
+    
 
-    <auteur id="A16">
-        <nom>Friedrich Nietzsche</nom>
-        <pays>Allemagne</pays>
-        <livres>
-            <livreref idLivre="L17"/>
-        </livres>
-    </auteur>
+    
+
 
 </auteurs>

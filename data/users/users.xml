@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<users xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="users.xsd">
+<?xml version="1.0" encoding="UTF-8"?><users xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="users.xsd">
     <user>
         <id>1</id>
         <username>admin</username>
@@ -21,4 +20,4 @@
         <email>auteur@univ.edu</email>
         <role>auteur</role>
     </user>
-</users>
+<user><id>4</id><username>aya</username><password>ayaassaf</password><email>aya@gmail.com</email><role>user</role></user></users>

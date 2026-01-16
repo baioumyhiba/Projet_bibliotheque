@@ -82,6 +82,27 @@ const App = {
                 el.setAttribute('placeholder', this.translations[key]);
             }
         });
+
+        // 3. Titles/Tooltips (data-i18n-title)
+        const titleElements = document.querySelectorAll('[data-i18n-title]');
+        titleElements.forEach(el => {
+            const key = el.getAttribute('data-i18n-title');
+            if (this.translations[key]) {
+                el.setAttribute('title', this.translations[key]);
+            }
+        });
+
+        // 4. Tooltip text content (data-i18n-tooltip)
+        const tooltipElements = document.querySelectorAll('[data-i18n-tooltip]');
+        tooltipElements.forEach(el => {
+            const key = el.getAttribute('data-i18n-tooltip');
+            if (this.translations[key]) {
+                el.textContent = this.translations[key];
+                console.log(`Tooltip updated: ${key} = ${this.translations[key]}`);
+            } else {
+                console.warn(`Translation missing for tooltip key: ${key}`);
+            }
+        });
     },
 
     switchLang: async function (lang) {
@@ -119,13 +140,22 @@ const App = {
         const dashSection = document.getElementById('dashboard-section');
         if (dashSection) dashSection.style.display = 'block';
 
-        // Update Welcome Message
-        const roleLabel = this.translations['role.label'] || "Role: ";
+        // Update Welcome Message - Afficher uniquement le nom d'utilisateur
         const userRoleDisplay = document.getElementById('user-role-display');
-        if (userRoleDisplay) userRoleDisplay.textContent = roleLabel + (user.roleName || user.role);
+        if (userRoleDisplay) userRoleDisplay.textContent = user.username || user.email || 'Utilisateur';
 
         // Render Menu via XSLT
         await this.renderMenu(user.role);
+        
+        // Afficher le message de bienvenue uniquement si on est sur la page d'accueil
+        this.toggleWelcomeMessage(!window.location.hash || window.location.hash === '');
+    },
+    
+    toggleWelcomeMessage: function (show) {
+        const welcomeSection = document.getElementById('welcome-section');
+        if (welcomeSection) {
+            welcomeSection.style.display = show ? 'block' : 'none';
+        }
     },
 
     renderMenu: async function (role) {
@@ -168,8 +198,98 @@ const App = {
 
     logout: function () {
         Auth.logout();
+    },
+
+    showRegisterModal: function () {
+        const modal = document.getElementById('register-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            // Fermer le modal si on clique en dehors
+            modal.onclick = function(e) {
+                if (e.target === modal) {
+                    App.closeRegisterModal();
+                }
+            };
+        }
+    },
+
+    closeRegisterModal: function () {
+        const modal = document.getElementById('register-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            const form = document.getElementById('register-form');
+            if (form) form.reset();
+            const msgEl = document.getElementById('register-message');
+            if (msgEl) msgEl.textContent = '';
+        }
+    },
+
+    handleRegister: async function (e) {
+        e.preventDefault();
+        const username = document.getElementById('reg-username').value.trim();
+        const email = document.getElementById('reg-email').value.trim();
+        const password = document.getElementById('reg-password').value;
+        const confirmPassword = document.getElementById('reg-confirm-password').value;
+        const msgEl = document.getElementById('register-message');
+
+        // Validation
+        if (password !== confirmPassword) {
+            msgEl.textContent = this.translations['register.password-mismatch'] || "Les mots de passe ne correspondent pas";
+            msgEl.style.color = 'red';
+            return;
+        }
+
+        if (password.length < 6) {
+            msgEl.textContent = this.translations['register.password-short'] || "Le mot de passe doit contenir au moins 6 caractères";
+            msgEl.style.color = 'red';
+            return;
+        }
+
+        if (username.length < 3) {
+            msgEl.textContent = this.translations['register.username-short'] || "Le nom d'utilisateur doit contenir au moins 3 caractères";
+            msgEl.style.color = 'red';
+            return;
+        }
+
+        try {
+            // Vérifier que Auth.register existe
+            if (!Auth || typeof Auth.register !== 'function') {
+                console.error('Auth.register is not available. Make sure auth.js is loaded correctly.');
+                msgEl.textContent = "Erreur: La fonction d'inscription n'est pas disponible. Veuillez recharger la page.";
+                msgEl.style.color = 'red';
+                return;
+            }
+            
+            msgEl.textContent = '';
+            const role = document.getElementById('reg-role').value;
+            const user = await Auth.register(username, email, password, role);
+            
+            // Afficher un message de succès
+            msgEl.textContent = this.translations['register.success'] || "Inscription réussie ! Redirection...";
+            msgEl.style.color = 'green';
+            
+            // Fermer le modal et rediriger après un court délai
+            setTimeout(() => {
+                this.closeRegisterModal();
+                // Optionnel : connecter automatiquement l'utilisateur
+                // window.location.href = "dashboard.html";
+                // Ou afficher un message pour se connecter
+                const loginMsg = document.getElementById('login-message');
+                if (loginMsg) {
+                    loginMsg.textContent = this.translations['register.login-prompt'] || "Inscription réussie ! Veuillez vous connecter.";
+                    loginMsg.style.color = 'green';
+                }
+            }, 1500);
+            
+        } catch (err) {
+            msgEl.textContent = err.message || this.translations['register.error'] || "Erreur lors de l'inscription";
+            msgEl.style.color = 'red';
+        }
     }
 };
+
+// Exposer closeRegisterModal globalement
+window.closeRegisterModal = () => App.closeRegisterModal();
 
 // Start
 window.addEventListener('DOMContentLoaded', () => {
@@ -183,6 +303,13 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             const loginForm = document.getElementById('login-form');
             if (loginForm) loginForm.addEventListener('submit', App.handleLogin.bind(App));
+            
+            const registerBtn = document.getElementById('register-btn');
+            if (registerBtn) registerBtn.addEventListener('click', App.showRegisterModal);
+            
+            const registerForm = document.getElementById('register-form');
+            if (registerForm) registerForm.addEventListener('submit', App.handleRegister.bind(App));
+            
             App.loadLanguage(App.currentLang);
         }
     }
@@ -195,17 +322,89 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         App.loadLanguage(App.currentLang);
         App.showDashboard(user);
+        
+        // Restaurer la page active depuis l'URL hash après actualisation
+        const hash = window.location.hash;
+        if (hash) {
+            // Petit délai pour s'assurer que tout est chargé
+            setTimeout(() => {
+                window.navigate(hash);
+            }, 100);
+        } else {
+            // Charger la page d'accueil si pas de hash
+            setTimeout(() => {
+                if (typeof loadHomePage === 'function') {
+                    loadHomePage();
+                }
+            }, 100);
+        }
     }
 });
 
 // Global helpers for HTML onclick
 window.switchLang = (l) => App.switchLang(l);
 window.logout = () => App.logout();
-window.navigate = (hash) => {
+window.toggleMenu = function() {
+    const sidebar = document.getElementById('sidebar-menu');
+    if (sidebar) {
+        sidebar.classList.toggle('expanded');
+    }
+};
+window.navigate = async (hash) => {
+    // Mettre à jour l'URL avec le hash pour garder la page après actualisation
+    if (hash) {
+        window.location.hash = hash;
+    }
+    
+    // Afficher le message de bienvenue uniquement sur la page d'accueil
+    const isHomePage = !hash || hash === '' || hash === '#home';
+    App.toggleWelcomeMessage(isHomePage);
+    
+    // Charger la page d'accueil si on revient à l'accueil
+    if (isHomePage) {
+        if (typeof loadHomePage === 'function') {
+            await loadHomePage();
+        } else {
+            const workspace = document.getElementById('workspace');
+            if (workspace) {
+                workspace.innerHTML = '<p>Contenu du module...</p>';
+            }
+        }
+        return;
+    }
+    
     if (hash === '#logout') {
         App.logout();
         return;
     }
+    
+    if (hash === '#authors') {
+        if (typeof loadAuthors === 'function') {
+            await loadAuthors();
+        } else {
+            console.error("loadAuthors function not found");
+        }
+        return;
+    }
+    
+    if (hash === '#books') {
+        if (typeof loadBooks === 'function') {
+            await loadBooks();
+        } else {
+            console.error("loadBooks function not found");
+        }
+        return;
+    }
+    
+    if (hash === '#consultation') {
+        if (typeof loadConsultation === 'function') {
+            await loadConsultation();
+        } else {
+            console.error("loadConsultation function not found");
+        }
+        return;
+    }
+    
     // Autres actions de navigation (modules etc)
     console.log("Navigating to", hash);
 };
