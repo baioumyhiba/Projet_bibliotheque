@@ -41,7 +41,7 @@
         <pays>Maroc</pays>
         <livres>
             <livreref idLivre="L7"/>
-        </livres>
+        <livreref idLivre="L21"/></livres>
     </auteur>
 
     <auteur id="A7">
@@ -90,7 +90,7 @@
         <pays>Russie</pays>
         <livres>
             <livreref idLivre="L13"/>
-        </livres>
+        <livreref idLivre="L18"/><livreref idLivre="L22"/></livres>
     </auteur>
 
     <auteur id="A13">
@@ -98,7 +98,7 @@
         <pays>Royaume-Uni</pays>
         <livres>
             <livreref idLivre="L14"/>
-        </livres>
+        <livreref idLivre="L19"/><livreref idLivre="L20"/></livres>
     </auteur>
 
     <!-- Histoire / Philosophie -->
@@ -115,4 +115,4 @@
     
 
 
-</auteurs>
+<auteur id="A15"><nom>hiba</nom><pays>maroc</pays><livres/></auteur><auteur id="A16"><nom>hiba</nom><pays>maroc</pays><livres/></auteur><auteur id="A17"><nom>c</nom><pays>c</pays><livres/></auteur><auteur id="A18"><nom>s</nom><pays>s</pays><livres/></auteur></auteurs>

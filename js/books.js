@@ -3,6 +3,23 @@ let xmlData;
 let currentEditBook = null;
 let currentImageData = null; // Stocke l'image en Base64
 
+async function addLivre(req, res) {
+  const { title } = req.body;
+
+  // 1️⃣ Sauvegarde du livre (XML / JSON / DB)
+  // ...
+
+  // 2️⃣ Notification (OBSERVER)
+  await subject.notify('BOOK_ADDED', {
+    title,
+    users: ['user1', 'user2', 'user3']
+  });
+
+  res.json({ success: true });
+}
+
+module.exports = { addLivre };
+
 // Fonction pour sauvegarder le XML sur le serveur
 async function saveXMLToFile(filePath, xmlContent) {
     try {
@@ -443,6 +460,23 @@ function initializeBookListeners() {
             // Sauvegarder sur le serveur
             const saved = await saveXMLToFile('data/books.xml', updatedXml);
             
+            // Envoyer une notification via le pattern Observer (même si saved est false, l'action a été faite)
+            try {
+                if (window.NotificationCenter) {
+                    const eventType = currentEditBook ? 'BOOK_MODIFIED' : 'BOOK_ADDED';
+                    console.log('Envoi notification:', eventType, titre);
+                    await window.NotificationCenter.notify({
+                        eventType: eventType,
+                        data: { title: titre }
+                    });
+                    console.log('Notification envoyée avec succès');
+                } else {
+                    console.error('NotificationCenter n\'est pas disponible');
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi de la notification:', error);
+            }
+            
             if (saved) {
                 alert(currentEditBook ? "Livre modifié avec succès et sauvegardé dans le fichier XML!" : "Livre ajouté avec succès et sauvegardé dans le fichier XML!");
             } else {
@@ -591,6 +625,8 @@ async function loadBookMetadata(title, detailAuthorEl, detailYearEl, detailCateg
         console.error("Erreur lors du chargement des métadonnées:", e);
     }
 }
+
+
 function closeDetails() { 
     // Chercher par ID d'abord
     let detail = document.getElementById('book-details');
@@ -876,6 +912,22 @@ async function deleteBook(titre){
         
         // Sauvegarder sur le serveur
         const saved = await saveXMLToFile('data/books.xml', updatedXml);
+        
+        // Envoyer une notification via le pattern Observer (même si saved est false)
+        try {
+            if (window.NotificationCenter) {
+                console.log('Envoi notification BOOK_DELETED:', titre);
+                await window.NotificationCenter.notify({
+                    eventType: 'BOOK_DELETED',
+                    data: { title: titre }
+                });
+                console.log('Notification envoyée avec succès');
+            } else {
+                console.error('NotificationCenter n\'est pas disponible');
+            }
+        } catch (error) {
+            console.error('Erreur lors de l\'envoi de la notification:', error);
+        }
         
         if (saved) {
             alert("Livre supprimé avec succès et sauvegardé dans le fichier XML!");

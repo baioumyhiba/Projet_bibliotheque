@@ -20,4 +20,4 @@
         <email>auteur@univ.edu</email>
         <role>auteur</role>
     </user>
-<user><id>4</id><username>aya</username><password>ayaassaf</password><email>aya@gmail.com</email><role>user</role></user></users>
+<user><id>4</id><username>aya</username><password>ayaassaf</password><email>aya@gmail.com</email><role>user</role></user><user><id>5</id><username>hiba</username><password>123hiba</password><email>baioumyhiba@gmail.com</email><role>user</role></user></users>

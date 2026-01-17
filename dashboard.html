@@ -8,6 +8,18 @@
 <body>
     <header class="top-header">
         <div class="title" data-i18n="app.title">Bibliothèque Numérique</div>
+
+   <div class="notif-wrapper">
+    <span id="notif-bell" class="notif-bell">🔔</span>
+    <span id="notif-count" class="notif-count">0</span>
+
+    <div id="notification-panel" class="notification-panel hidden">
+        <p class="empty">Pas de notification</p>
+    </div>
+</div>
+
+
+
         <div class="lang-switch">
             <select id="language-select" onchange="switchLang(this.value)">
                 <option value="fr" selected>Français</option>
@@ -36,6 +48,7 @@
     </div>
     <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/notifications.js"></script>
     <script src="js/permissions.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/authors.js"></script>
