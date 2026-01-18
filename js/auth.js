@@ -28,10 +28,15 @@ const Auth = {
 
             for (let i = 0; i < users.length; i++) {
                 const u = users[i];
-                const uName = u.getElementsByTagName('username')[0].textContent;
-                const uPass = u.getElementsByTagName('password')[0].textContent;
+                const usernameEl = u.getElementsByTagName('username')[0];
+                const passwordEl = u.getElementsByTagName('password')[0];
+                
+                if (!usernameEl || !passwordEl) continue;
+                
+                const uName = usernameEl.textContent.trim();
+                const uPass = passwordEl.textContent.trim();
 
-                if (uName === username && uPass === password) {
+                if (uName === username.trim() && uPass === password.trim()) {
                     foundUser = {
                         id: u.getElementsByTagName('id')[0].textContent,
                         username: uName,

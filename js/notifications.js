@@ -171,41 +171,30 @@ const NotificationCenter = {
         try {
             const user = Auth.checkSession();
             if (!user) {
-                console.log('Aucun utilisateur connecté, notifications non chargées');
                 return;
             }
 
-            console.log('Chargement des notifications pour:', user.username);
-
-            // Récupérer toutes les notifications (userId="all" ou l'ID de l'utilisateur)
             const response = await fetch(`http://localhost:8000/notifications?userId=all`);
             if (!response.ok) {
                 throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
             }
 
             const notifications = await response.json();
-            console.log('Notifications reçues du serveur:', notifications);
             
             // Filtrer les notifications pour cet utilisateur ou "all"
             const userNotifications = Array.isArray(notifications) ? notifications.filter(n => 
                 n.userId === 'all' || n.userId === user.id || n.userId === user.id.toString()
             ).sort((a, b) => {
-                // Trier par timestamp décroissant (les plus récentes en premier)
                 const timestampA = a.timestamp || 0;
                 const timestampB = b.timestamp || 0;
                 return timestampB - timestampA;
             }) : [];
 
-            console.log(`Notifications filtrées: ${userNotifications.length} notification(s)`);
-
-            // Afficher les notifications (même si le panel est caché, pour mettre à jour le compteur)
             this.displayNotifications(userNotifications);
-            
-            // Mettre à jour le compteur
             this.updateNotificationCount(userNotifications);
             
         } catch (error) {
-            console.error('Erreur lors du chargement des notifications:', error);
+            console.error('[loadNotifications] Erreur:', error);
             // Afficher un message d'erreur dans le panel seulement s'il est visible
             const panel = document.getElementById('notification-panel');
             if (panel && !panel.classList.contains('hidden')) {
@@ -221,7 +210,7 @@ const NotificationCenter = {
     displayNotifications(notifications) {
         const panel = document.getElementById('notification-panel');
         if (!panel) {
-            console.warn('Panel de notifications non trouvé');
+            console.error('[displayNotifications] Panel de notifications non trouvé');
             return;
         }
 
@@ -230,10 +219,9 @@ const NotificationCenter = {
             return;
         }
 
-        // Limiter à 10 notifications les plus récentes
         const recentNotifications = notifications.slice(0, 10);
 
-        panel.innerHTML = recentNotifications.map(notif => {
+        const htmlContent = recentNotifications.map(notif => {
             const typeClass = `notif-type-${notif.type || 'info'}`;
             const readClass = notif.read ? 'notif-read' : '';
             const icon = this.getNotificationIcon(notif.type);
@@ -250,8 +238,10 @@ const NotificationCenter = {
             `;
         }).join('');
 
+        panel.innerHTML = htmlContent;
+
         // Ajouter les event listeners pour marquer comme lues
-        panel.querySelectorAll('.notification-item').forEach(item => {
+        panel.querySelectorAll('.notification-item').forEach((item) => {
             item.addEventListener('click', () => {
                 const notifId = item.getAttribute('data-id');
                 this.markAsRead(notifId);
@@ -282,8 +272,7 @@ const NotificationCenter = {
      * @param {string} notifId 
      */
     async markAsRead(notifId) {
-        // Pour l'instant, juste mettre à jour l'affichage local
-        // Dans une version future, on pourrait ajouter un endpoint pour marquer comme lue
+        // Mettre à jour l'affichage local immédiatement
         const item = document.querySelector(`.notification-item[data-id="${notifId}"]`);
         if (item) {
             item.classList.add('notif-read');
@@ -291,7 +280,27 @@ const NotificationCenter = {
             if (dot) dot.remove();
         }
         
-        // Recharger pour mettre à jour le compteur
+        // Envoyer la requête au serveur pour persister le changement
+        try {
+            const response = await fetch('/mark-notification-read', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: notifId })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                console.log(`[markAsRead] Notification ${notifId} marquée comme lue`);
+            } else {
+                console.warn(`[markAsRead] Échec: ${result.message}`);
+            }
+        } catch (error) {
+            console.error('[markAsRead] Erreur lors de la requête:', error);
+        }
+        
+        // Recharger pour mettre à jour le compteur et l'affichage
         setTimeout(() => this.loadNotifications(), 300);
     },
 

@@ -54,4 +54,4 @@
             <dateNaissance>1995-12-10</dateNaissance>
             <bio>Jeune auteure passionnée de littérature et de poésie. Je cherche à enrichir la bibliothèque avec mes œuvres littéraires et créatives.</bio>
         </profile>
-    </user><user><id>5</id><username>mmmm</username><password>123456</password><email>mmm@gmail.com</email><role>user</role></user></users>
+    </user><user><id>5</id><username>mmmm</username><password>123456</password><email>mmm@gmail.com</email><role>user</role></user><user><id>6</id><username>o</username><password>123456</password><email>o@library.com</email><role>auteur</role><profile><nom>o</nom><prenom/><telephone/><dateNaissance/><bio/></profile></user></users>

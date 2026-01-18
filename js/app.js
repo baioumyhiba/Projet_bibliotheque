@@ -373,6 +373,35 @@ window.switchLang = (l) => App.switchLang(l);
 window.logout = () => App.logout();
 // Global translation helper
 window.translate = (key, defaultValue) => App.translate(key, defaultValue);
+
+// Fonction globale pour toggle le panel de notifications (appelée depuis onclick HTML)
+window.toggleNotificationPanel = function(e) {
+    if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+    
+    const panel = document.getElementById('notification-panel');
+    if (!panel) {
+        console.error('[toggleNotificationPanel] Panel non trouvé');
+        return;
+    }
+    
+    panel.classList.toggle('hidden');
+    const isNowHidden = panel.classList.contains('hidden');
+    
+    if (!isNowHidden) {
+        panel.style.display = 'block';
+        panel.style.visibility = 'visible';
+        
+        if (typeof window.loadNotifications === 'function') {
+            window.loadNotifications();
+        }
+    } else {
+        panel.style.display = 'none';
+        panel.style.visibility = 'hidden';
+    }
+};
 window.toggleMenu = function() {
     const sidebar = document.getElementById('sidebar-menu');
     if (sidebar) {
@@ -470,18 +499,19 @@ function initNotifications() {
     const bell = document.getElementById('notif-bell');
     const panel = document.getElementById('notification-panel');
 
-    console.log('[initNotifications] Initialisation...', { bell: !!bell, panel: !!panel });
-
     if (bell && panel) {
-        // Retirer l'ancien event listener s'il existe
-        const newBell = bell.cloneNode(true);
-        bell.parentNode.replaceChild(newBell, bell);
+        // Éviter d'ajouter plusieurs fois le même listener
+        if (bell.dataset.listenerAttached === 'true') {
+            return;
+        }
         
-        // Ajouter le nouvel event listener
-        newBell.addEventListener('click', async (e) => {
+        // Marquer comme attaché
+        bell.dataset.listenerAttached = 'true';
+        
+        // Ajouter le nouvel event listener DIRECTEMENT sur la cloche existante
+        const clickHandler = async (e) => {
             e.stopPropagation();
             e.preventDefault();
-            console.log('[notif-bell] Clic détecté');
             
             const currentPanel = document.getElementById('notification-panel');
             if (!currentPanel) {
@@ -489,46 +519,63 @@ function initNotifications() {
                 return;
             }
             
-            const isHidden = currentPanel.classList.contains('hidden');
-            console.log('[notif-bell] État actuel:', { isHidden });
-            
             currentPanel.classList.toggle('hidden');
-            console.log('[notif-bell] Nouvel état:', { isHidden: currentPanel.classList.contains('hidden') });
-            
-            // Recharger les notifications quand on ouvre le panel
             const isNowHidden = currentPanel.classList.contains('hidden');
-            if (!isNowHidden && typeof window.loadNotifications === 'function') {
-                console.log('[notif-bell] Chargement des notifications...');
-                await window.loadNotifications();
+            
+            if (!isNowHidden) {
+                currentPanel.style.display = 'block';
+                currentPanel.style.visibility = 'visible';
+                
+                // Recharger les notifications quand on ouvre le panel
+                if (typeof window.loadNotifications === 'function') {
+                    try {
+                        await window.loadNotifications();
+                    } catch (error) {
+                        console.error('[notif-bell] Erreur lors du chargement des notifications:', error);
+                    }
+                }
+            } else {
+                currentPanel.style.display = 'none';
+                currentPanel.style.visibility = 'hidden';
             }
-        });
+        };
+        
+        // Attacher l'event listener DIRECTEMENT sur la cloche (sans cloner)
+        bell.addEventListener('click', clickHandler, true);
+        bell.addEventListener('click', clickHandler, false);
+        bell.onclick = clickHandler;
 
         // Fermer le panel si on clique en dehors (une seule fois, pas à chaque appel)
         if (!window.notifClickOutsideListener) {
+            let clickOnBell = false;
+            
+            document.addEventListener('click', (e) => {
+                const bell = document.getElementById('notif-bell');
+                if (bell && (bell.contains(e.target) || bell === e.target)) {
+                    clickOnBell = true;
+                    setTimeout(() => { clickOnBell = false; }, 200);
+                }
+            }, true);
+            
             window.notifClickOutsideListener = (e) => {
-                // Petit délai pour éviter que le clic sur la cloche ferme immédiatement le panel
-                setTimeout(() => {
-                    const currentBell = document.getElementById('notif-bell');
-                    const currentPanel = document.getElementById('notification-panel');
+                if (clickOnBell) return;
+                
+                const currentBell = document.getElementById('notif-bell');
+                const currentPanel = document.getElementById('notification-panel');
+                
+                if (currentBell && currentPanel) {
+                    const clickedBell = currentBell.contains(e.target) || currentBell === e.target;
+                    const clickedPanel = currentPanel.contains(e.target) || currentPanel === e.target;
                     
-                    if (currentBell && currentPanel) {
-                        const clickedBell = currentBell.contains(e.target) || currentBell === e.target;
-                        const clickedPanel = currentPanel.contains(e.target) || currentPanel === e.target;
-                        
-                        // Ne fermer que si on clique vraiment en dehors ET que le panel est ouvert
-                        if (!clickedBell && !clickedPanel && !currentPanel.classList.contains('hidden')) {
-                            console.log('[notif-click-outside] Fermeture du panel');
-                            currentPanel.classList.add('hidden');
-                        }
+                    if (!clickedBell && !clickedPanel && !currentPanel.classList.contains('hidden')) {
+                        currentPanel.classList.add('hidden');
+                        currentPanel.style.display = 'none';
+                        currentPanel.style.visibility = 'hidden';
                     }
-                }, 100);
+                }
             };
             document.addEventListener('click', window.notifClickOutsideListener);
         }
-        
-        console.log('[initNotifications] Event listeners ajoutés');
-    } else {
-        console.error('[initNotifications] Éléments non trouvés:', { bell: !!bell, panel: !!panel });
     }
     
     // Recharger les notifications toutes les 30 secondes

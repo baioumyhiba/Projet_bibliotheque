@@ -506,6 +506,106 @@ async function saveAuthor(event, authorId) {
             newAuthor.appendChild(paysEl);
             newAuthor.appendChild(livresEl);
             auteurs.appendChild(newAuthor);
+            
+            // Créer aussi un utilisateur avec le rôle "auteur" dans users.xml
+            try {
+                const usersResp = await fetch('data/users/users.xml' + cacheBuster);
+                if (usersResp.ok) {
+                    const usersText = await usersResp.text();
+                    const usersDoc = new DOMParser().parseFromString(usersText, 'application/xml');
+                    
+                    // Vérifier si un utilisateur avec ce nom existe déjà
+                    const existingUsers = usersDoc.getElementsByTagName('user');
+                    let userExists = false;
+                    for (let i = 0; i < existingUsers.length; i++) {
+                        const usernameEl = existingUsers[i].getElementsByTagName('username')[0];
+                        if (usernameEl && usernameEl.textContent.trim().toLowerCase() === nom.trim().toLowerCase()) {
+                            userExists = true;
+                            break;
+                        }
+                    }
+                    
+                    // Si l'utilisateur n'existe pas, le créer
+                    if (!userExists) {
+                        // Trouver le plus grand ID d'utilisateur
+                        let maxUserId = 0;
+                        for (let i = 0; i < existingUsers.length; i++) {
+                            const idEl = existingUsers[i].getElementsByTagName('id')[0];
+                            if (idEl) {
+                                const id = parseInt(idEl.textContent);
+                                if (!isNaN(id) && id > maxUserId) {
+                                    maxUserId = id;
+                                }
+                            }
+                        }
+                        const newUserId = maxUserId + 1;
+                        
+                        // Créer le nouvel utilisateur
+                        const newUser = usersDoc.createElement('user');
+                        
+                        const idEl = usersDoc.createElement('id');
+                        idEl.textContent = newUserId;
+                        newUser.appendChild(idEl);
+                        
+                        const usernameEl = usersDoc.createElement('username');
+                        usernameEl.textContent = nom;
+                        newUser.appendChild(usernameEl);
+                        
+                        const passwordEl = usersDoc.createElement('password');
+                        passwordEl.textContent = nom.toLowerCase().replace(/\s+/g, '') + '123'; // Mot de passe par défaut
+                        newUser.appendChild(passwordEl);
+                        
+                        const emailEl = usersDoc.createElement('email');
+                        emailEl.textContent = nom.toLowerCase().replace(/\s+/g, '') + '@gmail.com';
+                        newUser.appendChild(emailEl);
+                        
+                        const roleEl = usersDoc.createElement('role');
+                        roleEl.textContent = 'auteur';
+                        newUser.appendChild(roleEl);
+                        
+                        // Ajouter un profil minimal
+                        const profileEl = usersDoc.createElement('profile');
+                        
+                        const nomEl = usersDoc.createElement('nom');
+                        nomEl.textContent = nom;
+                        profileEl.appendChild(nomEl);
+                        
+                        const prenomEl = usersDoc.createElement('prenom');
+                        prenomEl.textContent = '';
+                        profileEl.appendChild(prenomEl);
+                        
+                        const telephoneEl = usersDoc.createElement('telephone');
+                        telephoneEl.textContent = '';
+                        profileEl.appendChild(telephoneEl);
+                        
+                        const dateNaissanceEl = usersDoc.createElement('dateNaissance');
+                        dateNaissanceEl.textContent = '';
+                        profileEl.appendChild(dateNaissanceEl);
+                        
+                        const bioEl = usersDoc.createElement('bio');
+                        bioEl.textContent = '';
+                        profileEl.appendChild(bioEl);
+                        
+                        newUser.appendChild(profileEl);
+                        
+                        // Ajouter au document
+                        const root = usersDoc.documentElement;
+                        root.appendChild(newUser);
+                        
+                        // Sauvegarder users.xml
+                        const usersSerializer = new XMLSerializer();
+                        let updatedUsersXml = usersSerializer.serializeToString(usersDoc);
+                        if (!updatedUsersXml.includes('<?xml')) {
+                            updatedUsersXml = '<?xml version="1.0" encoding="UTF-8"?>' + updatedUsersXml;
+                        }
+                        
+                        await saveXMLToFile('data/users/users.xml', updatedUsersXml);
+                    }
+                }
+            } catch (userError) {
+                console.error('Erreur lors de la création de l\'utilisateur pour l\'auteur:', userError);
+                // Ne pas bloquer la sauvegarde de l'auteur si la création de l'utilisateur échoue
+            }
         }
         
         // Convertir en XML string avec formatage

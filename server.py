@@ -150,6 +150,47 @@ class XMLHandler(SimpleHTTPRequestHandler):
             except Exception as e:
                 self.send_error(500, str(e))
 
+        # ===============================
+        # 3️⃣ MARK NOTIFICATION AS READ
+        # ===============================
+        elif self.path == "/mark-notification-read":
+            try:
+                data = json.loads(post_data.decode("utf-8"))
+                notif_id = data.get("id")
+
+                if not notif_id:
+                    self.send_error(400, "Missing notification id")
+                    return
+
+                # Charger les notifications existantes
+                if not os.path.exists(NOTIF_JSON):
+                    self._send_json({"success": False, "message": "No notifications file"})
+                    return
+
+                with open(NOTIF_JSON, "r", encoding="utf-8") as f:
+                    notifications = json.load(f)
+
+                # Trouver et marquer la notification comme lue
+                found = False
+                for notif in notifications:
+                    if notif.get("id") == notif_id:
+                        notif["read"] = True
+                        found = True
+                        break
+
+                if not found:
+                    self._send_json({"success": False, "message": "Notification not found"})
+                    return
+
+                # Sauvegarder les notifications mises à jour
+                with open(NOTIF_JSON, "w", encoding="utf-8") as f:
+                    json.dump(notifications, f, indent=2, ensure_ascii=False)
+
+                self._send_json({"success": True})
+
+            except Exception as e:
+                self.send_error(500, str(e))
+
         else:
             self.send_error(404, "Not found")
 
@@ -175,6 +216,7 @@ def run(port=8000):
     print(f"📍 http://localhost:{port}")
     print("📝 POST /save-xml")
     print("🔔 POST /add-notification")
+    print("✅ POST /mark-notification-read")
     print("📥 GET  /notifications?userId=xxx")
     print("=" * 60)
 

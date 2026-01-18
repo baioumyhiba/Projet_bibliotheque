@@ -46,5 +46,69 @@
     "type": "warning",
     "read": false,
     "timestamp": 1768705142006
+  },
+  {
+    "id": "notif_1768740159067",
+    "userId": "all",
+    "message": "✍️ admin a ajouté l'auteur \"i\"",
+    "type": "success",
+    "read": false,
+    "timestamp": 1768740159067
+  },
+  {
+    "id": "notif_1768740214756",
+    "userId": "all",
+    "message": "📚 admin a ajouté le livre \"z\"",
+    "type": "success",
+    "read": false,
+    "timestamp": 1768740214756
+  },
+  {
+    "id": "notif_1768741863999",
+    "userId": "all",
+    "message": "🗑️ admin a supprimé le livre \"z\"",
+    "type": "warning",
+    "read": false,
+    "timestamp": 1768741863999
+  },
+  {
+    "id": "notif_1768742412620",
+    "userId": "all",
+    "message": "🗑️ admin a supprimé l'auteur \"i\"",
+    "type": "warning",
+    "read": false,
+    "timestamp": 1768742412620
+  },
+  {
+    "id": "notif_1768742419434",
+    "userId": "all",
+    "message": "🗑️ admin a supprimé l'auteur \"aya\"",
+    "type": "warning",
+    "read": false,
+    "timestamp": 1768742419434
+  },
+  {
+    "id": "notif_1768742428431",
+    "userId": "all",
+    "message": "🗑️ admin a supprimé l'auteur \"aya\"",
+    "type": "warning",
+    "read": false,
+    "timestamp": 1768742428431
+  },
+  {
+    "id": "notif_1768742433662",
+    "userId": "all",
+    "message": "🗑️ admin a supprimé l'auteur \"auteur\"",
+    "type": "warning",
+    "read": false,
+    "timestamp": 1768742433662
+  },
+  {
+    "id": "notif_1768742679296",
+    "userId": "all",
+    "message": "✍️ admin a ajouté l'auteur \"o\"",
+    "type": "success",
+    "read": false,
+    "timestamp": 1768742679296
   }
 ]
