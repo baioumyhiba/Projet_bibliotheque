@@ -16,7 +16,7 @@ const Auth = {
         try {
             // 1. Load Users XML
             const responseUsers = await fetch('data/users/users.xml');
-            if (!responseUsers.ok) throw new Error("Impossible de charger users.xml");
+            if (!responseUsers.ok) throw new Error(translate("auth.error.load.users", "Impossible de charger users.xml"));
             const textUsers = await responseUsers.text();
             const parser = new DOMParser();
             const xmlUsers = parser.parseFromString(textUsers, "application/xml");
@@ -43,12 +43,12 @@ const Auth = {
             }
 
             if (!foundUser) {
-                throw new Error("Identifiants incorrects");
+                throw new Error(translate("auth.error.invalid.credentials", "Identifiants incorrects"));
             }
 
             // 3. Load Roles XML to get role details
             const responseRoles = await fetch('data/users/roles.xml');
-            if (!responseRoles.ok) throw new Error("Impossible de charger roles.xml");
+            if (!responseRoles.ok) throw new Error(translate("auth.error.load.roles", "Impossible de charger roles.xml"));
             const textRoles = await responseRoles.text();
             const xmlRoles = parser.parseFromString(textRoles, "application/xml");
 
@@ -112,7 +112,7 @@ const Auth = {
         try {
             // 1. Load Users XML
             const responseUsers = await fetch('data/users/users.xml?v=' + Date.now());
-            if (!responseUsers.ok) throw new Error("Impossible de charger users.xml");
+            if (!responseUsers.ok) throw new Error(translate("auth.error.load.users", "Impossible de charger users.xml"));
             const textUsers = await responseUsers.text();
             const parser = new DOMParser();
             const xmlUsers = parser.parseFromString(textUsers, "application/xml");
@@ -125,10 +125,10 @@ const Auth = {
                 const uEmail = u.getElementsByTagName('email')[0].textContent;
                 
                 if (uName === username) {
-                    throw new Error("Ce nom d'utilisateur est déjà utilisé");
+                    throw new Error(translate("auth.error.username.exists", "Ce nom d'utilisateur est déjà utilisé"));
                 }
                 if (uEmail === email) {
-                    throw new Error("Cet email est déjà utilisé");
+                    throw new Error(translate("auth.error.email.exists", "Cet email est déjà utilisé"));
                 }
             }
 
@@ -217,7 +217,7 @@ const Auth = {
 
             if (!saveResponse.ok) {
                 const errorText = await saveResponse.text();
-                throw new Error("Erreur lors de la sauvegarde: " + errorText);
+                throw new Error(translate("auth.error.save", "Erreur lors de la sauvegarde: ") + errorText);
             }
 
             // 9. Retourner les informations du nouvel utilisateur

@@ -14,7 +14,7 @@
         <categories>
             <categorieRef id="C1"/>
         </categories>
-    <authors><auteurRef id="INDISPO"/></authors></livre>
+    <authors><auteurRef id="A5"/></authors></livre>
 
     <livre idLivre="L3">
         <titre>Madame Bovary</titre>
@@ -65,7 +65,7 @@
     <livre idLivre="L6">
         <titre>La Boîte à merveilles</titre>
         <anneePublication>1954</anneePublication>
-        <description>a Boîte à merveilles est un roman autobiographique de Ahmed Sefrioui, publié en 1954, qui raconte l’enfance de Sidi Mohammed, un jeune garçon vivant dans la médina de Fès. À travers son regard d’enfant, l’auteur décrit la vie quotidienne, les traditions, les fêtes et les difficultés sociales du Maroc traditionnel. La « boîte à merveilles » est un objet symbolique dans lequel l’enfant conserve des souvenirs et des objets qui l’aident à s’évader de la solitude et de la tristesse. L’œuvre met en valeur la mémoire, l’imagination et la culture marocaine, tout en évoquant la pauvreté et la condition humaine avec sensibilité.</description>
+        <description>a Boîte à merveilles est un roman autobiographique de Ahmed Sefrioui, publié en 1954, qui raconte l'enfance de Sidi Mohammed, un jeune garçon vivant dans la médina de Fès. À travers son regard d'enfant, l'auteur décrit la vie quotidienne, les traditions, les fêtes et les difficultés sociales du Maroc traditionnel. La « boîte à merveilles » est un objet symbolique dans lequel l'enfant conserve des souvenirs et des objets qui l'aident à s'évader de la solitude et de la tristesse. L'œuvre met en valeur la mémoire, l'imagination et la culture marocaine, tout en évoquant la pauvreté et la condition humaine avec sensibilité.</description>
         <image>images/6.jpg</image>
         <isbn>9789954190197</isbn>
         <disponibilite>true</disponibilite>
@@ -73,14 +73,15 @@
             <auteurRef id="A5"/>
         </authors>
         <categories>
-            <categorieRef id="C2"/>
+            <categorieRef id="C1"/>
+            <categorieRef id="C6"/>
         </categories>
     </livre>
 
     <livre idLivre="L7">
         <titre>Le Passé simple</titre>
         <anneePublication>1954</anneePublication>
-        <description>Le Passé simple est un roman autobiographique de Driss Chraïbi, publié en 1954, qui raconte la révolte d’un jeune garçon contre l’autorité familiale et sociale. Le narrateur, appelé Driss, grandit dans une famille marocaine traditionnelle dominée par un père autoritaire et violent. À travers son regard critique, le roman dénonce le patriarcat, l’oppression, l’hypocrisie sociale et certaines traditions rigides. Cette œuvre marque une rupture avec la littérature marocaine classique et exprime un fort désir de liberté, de modernité et de remise en question des valeurs établies.</description>
+        <description>Le Passé simple est un roman autobiographique de Driss Chraïbi, publié en 1954, qui raconte la révolte d'un jeune garçon contre l'autorité familiale et sociale. Le narrateur, appelé Driss, grandit dans une famille marocaine traditionnelle dominée par un père autoritaire et violent. À travers son regard critique, le roman dénonce le patriarcat, l'oppression, l'hypocrisie sociale et certaines traditions rigides. Cette œuvre marque une rupture avec la littérature marocaine classique et exprime un fort désir de liberté, de modernité et de remise en question des valeurs établies.</description>
          <image>images/7.jpg</image>
         <isbn>9789954190203</isbn>
         <disponibilite>true</disponibilite>
@@ -88,14 +89,15 @@
             <auteurRef id="A6"/>
         </authors>
         <categories>
-            <categorieRef id="C2"/>
+            <categorieRef id="C1"/>
+            <categorieRef id="C6"/>
         </categories>
     </livre>
 
     <livre idLivre="L8">
         <titre>Il était une fois un vieux couple heureux</titre>
         <anneePublication>2001</anneePublication>
-        <description>Il était une fois un vieux couple heureux est un roman de Mohammed Khaïr‑Eddine, publié en 2002, qui raconte la vie simple et paisible d’un vieux couple vivant dans un village berbère du Maroc. Le mari, Bouchaïb, consacre ses journées à écrire un poème célébrant un saint, tandis que sa femme s’occupe du foyer et des traditions quotidiennes. À travers leur quotidien, le roman célèbre la sagesse populaire, les coutumes amazighes et la résistance culturelle face à la modernité. Cette œuvre offre un regard poétique sur la vie rurale marocaine et souligne l’importance de la mémoire, de la transmission et de l’harmonie avec la nature.</description>
+        <description>Il était une fois un vieux couple heureux est un roman de Mohammed Khaïr‑Eddine, publié en 2002, qui raconte la vie simple et paisible d'un vieux couple vivant dans un village berbère du Maroc. Le mari, Bouchaïb, consacre ses journées à écrire un poème célébrant un saint, tandis que sa femme s'occupe du foyer et des traditions quotidiennes. À travers leur quotidien, le roman célèbre la sagesse populaire, les coutumes amazighes et la résistance culturelle face à la modernité. Cette œuvre offre un regard poétique sur la vie rurale marocaine et souligne l'importance de la mémoire, de la transmission et de l'harmonie avec la nature.</description>
          <image>images/8.jpg</image>
         <isbn>9789954190210</isbn>
         <disponibilite>false</disponibilite>
@@ -103,14 +105,15 @@
             <auteurRef id="A7"/>
         </authors>
         <categories>
-            <categorieRef id="C2"/>
+            <categorieRef id="C1"/>
+            <categorieRef id="C8"/>
         </categories>
     </livre>
 
     <livre idLivre="L9">
         <titre>Le Pain nu</titre>
         <anneePublication>1973</anneePublication>
-        <description>Le Pain nu est un roman autobiographique de Mohammed Choukri, publié en 1973, qui raconte l’enfance et la jeunesse difficiles de l’auteur dans la ville de Tanger. Orphelin et pauvre, Mohammed Choukri grandit dans la misère, confronté à la faim, à la violence et à l’errance. À travers son récit cru et sincère, le roman dénonce les injustices sociales, la pauvreté extrême et l’exclusion des plus vulnérables. Cette œuvre, marquée par un réalisme brutal, exprime la lutte pour la survie et la quête d’identité dans un environnement hostile, tout en offrant un témoignage poignant sur la condition humaine au Maroc du XXᵉ siècle.</description>
+        <description>Le Pain nu est un roman autobiographique de Mohammed Choukri, publié en 1973, qui raconte l'enfance et la jeunesse difficiles de l'auteur dans la ville de Tanger. Orphelin et pauvre, Mohammed Choukri grandit dans la misère, confronté à la faim, à la violence et à l'errance. À travers son récit cru et sincère, le roman dénonce les injustices sociales, la pauvreté extrême et l'exclusion des plus vulnérables. Cette œuvre, marquée par un réalisme brutal, exprime la lutte pour la survie et la quête d'identité dans un environnement hostile, tout en offrant un témoignage poignant sur la condition humaine au Maroc du XXᵉ siècle.</description>
         <image>images/9.jpg</image>
         <isbn>9789954190227</isbn>
         <disponibilite>true</disponibilite>
@@ -118,7 +121,8 @@
             <auteurRef id="A8"/>
         </authors>
         <categories>
-            <categorieRef id="C2"/>
+            <categorieRef id="C1"/>
+            <categorieRef id="C6"/>
         </categories>
     </livre>
 
@@ -134,7 +138,7 @@
             <auteurRef id="A9"/>
         </authors>
         <categories>
-            <categorieRef id="C3"/>
+            <categorieRef id="C1"/>
         </categories>
     </livre>
 
@@ -150,6 +154,7 @@
         </authors>
         <categories>
             <categorieRef id="C3"/>
+            <categorieRef id="C5"/>
         </categories>
     </livre>
 
@@ -164,7 +169,7 @@
             <auteurRef id="A11"/>
         </authors>
         <categories>
-            <categorieRef id="C3"/>
+            <categorieRef id="C12"/>
         </categories>
     </livre>
 
@@ -179,7 +184,8 @@
             <auteurRef id="A12"/>
         </authors>
         <categories>
-            <categorieRef id="C3"/>
+            <categorieRef id="C7"/>
+            <categorieRef id="C5"/>
         </categories>
     </livre>
 
@@ -194,7 +200,7 @@
             <auteurRef id="A13"/>
         </authors>
         <categories>
-            <categorieRef id="C3"/>
+            <categorieRef id="C1"/>
         </categories>
     </livre>
 
@@ -210,7 +216,7 @@
             <auteurRef id="A14"/>
         </authors>
         <categories>
-            <categorieRef id="C4"/>
+            <categorieRef id="C2"/>
         </categories>
     </livre>
 
@@ -225,7 +231,7 @@
             <auteurRef id="A14"/>
         </authors>
         <categories>
-            <categorieRef id="C4"/>
+            <categorieRef id="C2"/>
         </categories>
     </livre>
 
@@ -240,8 +246,8 @@
             <auteurRef id="INDISPO"/>
         </authors>
         <categories>
-            <categorieRef id="C4"/>
+            <categorieRef id="C2"/>
         </categories>
     </livre>
 
-</livres>
+<livre idLivre="L18"><titre>oi</titre><anneePublication>2026</anneePublication><description>po</description><image/><isbn/><disponibilite>true</disponibilite><authors><auteurRef id="A16"/></authors><categories/></livre><livre idLivre="L19"><titre>ss</titre><anneePublication>2026</anneePublication><description>sss</description><image/><isbn>999999999999999999999999</isbn><disponibilite>true</disponibilite><authors><auteurRef id="A17"/></authors><categories><categorieRef id="C4"/></categories></livre></livres>

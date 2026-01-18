@@ -301,4 +301,16 @@ http://localhost:8000/login.html
 9. ✅ **Gestion bidirectionnelle** des données entre livres et auteurs
 10. ✅ **Support multilingue** complet (FR, EN, AR)
 
+## 📊 Diagrammes UML
+
+Le projet inclut des diagrammes UML au format PlantUML dans le dossier `diagrams/` :
+
+- **use_case_diagram.puml** : Diagramme de cas d'utilisation montrant les interactions entre les acteurs (Visiteur, Utilisateur, Auteur, Admin) et le système
+- **class_diagram.puml** : Diagramme de classes représentant la structure des données et des classes JavaScript
+
+Pour visualiser les diagrammes :
+1. Utiliser l'éditeur en ligne : http://www.plantuml.com/plantuml/uml/
+2. Installer l'extension PlantUML dans VS Code
+3. Voir le fichier `diagrams/README.md` pour plus d'options
+
 ---

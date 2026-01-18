@@ -7,19 +7,19 @@ async function loadHomePage() {
         <div class="home-container">
             <!-- Répartition par catégorie -->
             <section class="home-section">
-                <h3 class="section-title">Répartition par catégorie</h3>
+                <h3 class="section-title" data-i18n="home.category.title">Répartition par catégorie</h3>
                 <div id="category-cards" class="category-cards-grid"></div>
             </section>
 
             <!-- Derniers livres ajoutés -->
             <section class="home-section">
-                <h3 class="section-title">Derniers livres ajoutés</h3>
+                <h3 class="section-title" data-i18n="home.recent.title">Derniers livres ajoutés</h3>
                 <div id="recent-books" class="books-grid"></div>
             </section>
 
             <!-- Suggestions de livres populaires -->
             <section class="home-section">
-                <h3 class="section-title">Suggestions de livres populaires</h3>
+                <h3 class="section-title" data-i18n="home.popular.title">Suggestions de livres populaires</h3>
                 <div id="popular-books" class="books-grid"></div>
             </section>
         </div>
@@ -31,6 +31,11 @@ async function loadHomePage() {
         loadRecentBooks(),
         loadPopularBooks()
     ]);
+    
+    // Appliquer les traductions aux nouveaux éléments créés
+    if (App && App.applyTranslations) {
+        App.applyTranslations();
+    }
 }
 
 // Charger et afficher les cartes de catégories
@@ -92,7 +97,7 @@ async function loadCategoryCards() {
         if (!container) return;
 
         if (categoryCount.size === 0) {
-            container.innerHTML = '<p class="empty-message">Aucune catégorie trouvée</p>';
+            container.innerHTML = `<p class="empty-message">${translate("home.no.category", "Aucune catégorie trouvée")}</p>`;
             return;
         }
 
@@ -112,7 +117,7 @@ async function loadCategoryCards() {
                         <h4 class="category-name">${catName}</h4>
                         <p class="category-count">
                             <span class="count-number">${count}</span>
-                            <span class="count-label">livre${count > 1 ? 's' : ''}</span>
+                            <span class="count-label">${count === 1 ? translate("home.book.singular", "livre") : translate("home.book.plural", "livres")}</span>
                         </p>
                         <div class="category-percentage">
                             <div class="percentage-bar">
@@ -129,7 +134,7 @@ async function loadCategoryCards() {
         console.error("Erreur lors du chargement des catégories:", error);
         const container = document.getElementById('category-cards');
         if (container) {
-            container.innerHTML = '<p class="empty-message" style="color: #dc3545;">Erreur lors du chargement</p>';
+            container.innerHTML = `<p class="empty-message" style="color: #dc3545;">${translate("common.error.loading", "Erreur lors du chargement")}</p>`;
         }
     }
 }
@@ -167,7 +172,7 @@ async function loadRecentBooks() {
         for (let i = 0; i < authors.length; i++) {
             const author = authors[i];
             const authorId = author.getAttribute('id');
-            const authorName = author.getElementsByTagName('nom')[0]?.textContent || 'Auteur inconnu';
+            const authorName = author.getElementsByTagName('nom')[0]?.textContent || translate("consultation.unknown.author", "Auteur inconnu");
             authorsMap.set(authorId, authorName);
         }
 
@@ -176,13 +181,13 @@ async function loadRecentBooks() {
         if (!container) return;
 
         if (recentBooks.length === 0) {
-            container.innerHTML = '<p class="empty-message">Aucun livre récent</p>';
+            container.innerHTML = `<p class="empty-message">${translate("home.no.books.recent", "Aucun livre récent")}</p>`;
             return;
         }
 
         container.innerHTML = recentBooks.map(book => {
             const bookId = book.getAttribute('idLivre');
-            const title = book.getElementsByTagName('titre')[0]?.textContent || 'Sans titre';
+            const title = book.getElementsByTagName('titre')[0]?.textContent || translate("consultation.unknown.title", "Sans titre");
             const description = book.getElementsByTagName('description')[0]?.textContent || '';
             const image = book.getElementsByTagName('image')[0]?.textContent || '';
             const year = book.getElementsByTagName('anneePublication')[0]?.textContent || '';
@@ -192,13 +197,13 @@ async function loadRecentBooks() {
             for (let i = 0; i < authorRefs.length; i++) {
                 const authorId = authorRefs[i].getAttribute('id');
                 if (authorId === 'INDISPO') {
-                    authorNames.push('<span style="color: #dc3545; font-style: italic;">Indisponible</span>');
+                    authorNames.push(`<span style="color: #dc3545; font-style: italic;">${translate("books.author.unavailable", "Indisponible")}</span>`);
                 } else {
                     const authorName = authorsMap.get(authorId) || 'Auteur inconnu';
                     authorNames.push(authorName);
                 }
             }
-            const authorsText = authorNames.length > 0 ? authorNames.join(', ') : 'Auteur inconnu';
+            const authorsText = authorNames.length > 0 ? authorNames.join(', ') : translate("consultation.unknown.author", "Auteur inconnu");
 
             const shortDescription = description.length > 120 ? description.substring(0, 120) + '...' : description;
 
@@ -221,7 +226,7 @@ async function loadRecentBooks() {
         console.error("Erreur lors du chargement des derniers livres:", error);
         const container = document.getElementById('recent-books');
         if (container) {
-            container.innerHTML = '<p class="empty-message" style="color: #dc3545;">Erreur lors du chargement</p>';
+            container.innerHTML = `<p class="empty-message" style="color: #dc3545;">${translate("common.error.loading", "Erreur lors du chargement")}</p>`;
         }
     }
 }
@@ -267,7 +272,7 @@ async function loadPopularBooks() {
         for (let i = 0; i < authors.length; i++) {
             const author = authors[i];
             const authorId = author.getAttribute('id');
-            const authorName = author.getElementsByTagName('nom')[0]?.textContent || 'Auteur inconnu';
+            const authorName = author.getElementsByTagName('nom')[0]?.textContent || translate("consultation.unknown.author", "Auteur inconnu");
             authorsMap.set(authorId, authorName);
         }
 
@@ -276,13 +281,13 @@ async function loadPopularBooks() {
         if (!container) return;
 
         if (popularBooks.length === 0) {
-            container.innerHTML = '<p class="empty-message">Aucun livre disponible pour le moment</p>';
+            container.innerHTML = `<p class="empty-message">${translate("home.no.books", "Aucun livre disponible pour le moment")}</p>`;
             return;
         }
 
         container.innerHTML = popularBooks.map(book => {
             const bookId = book.getAttribute('idLivre');
-            const title = book.getElementsByTagName('titre')[0]?.textContent || 'Sans titre';
+            const title = book.getElementsByTagName('titre')[0]?.textContent || translate("consultation.unknown.title", "Sans titre");
             const description = book.getElementsByTagName('description')[0]?.textContent || '';
             const image = book.getElementsByTagName('image')[0]?.textContent || '';
             const year = book.getElementsByTagName('anneePublication')[0]?.textContent || '';
@@ -296,7 +301,7 @@ async function loadPopularBooks() {
                     authorNames.push(authorName);
                 }
             }
-            const authorsText = authorNames.length > 0 ? authorNames.join(', ') : 'Auteur inconnu';
+            const authorsText = authorNames.length > 0 ? authorNames.join(', ') : translate("consultation.unknown.author", "Auteur inconnu");
 
             const shortDescription = description.length > 120 ? description.substring(0, 120) + '...' : description;
 
@@ -319,7 +324,7 @@ async function loadPopularBooks() {
         console.error("Erreur lors du chargement des livres populaires:", error);
         const container = document.getElementById('popular-books');
         if (container) {
-            container.innerHTML = '<p class="empty-message" style="color: #dc3545;">Erreur lors du chargement</p>';
+            container.innerHTML = `<p class="empty-message" style="color: #dc3545;">${translate("common.error.loading", "Erreur lors du chargement")}</p>`;
         }
     }
 }

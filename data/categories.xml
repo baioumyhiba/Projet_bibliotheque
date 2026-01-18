@@ -12,4 +12,44 @@
         <libelle>Histoire / Philosophie</libelle>
     </categorie>
 
+    <categorie id="C3">
+        <libelle>Science-Fiction</libelle>
+    </categorie>
+
+    <categorie id="C4">
+        <libelle>Fantasy</libelle>
+    </categorie>
+
+    <categorie id="C5">
+        <libelle>Thriller / Suspense</libelle>
+    </categorie>
+
+    <categorie id="C6">
+        <libelle>Biographie</libelle>
+    </categorie>
+
+    <categorie id="C7">
+        <libelle>Policier</libelle>
+    </categorie>
+
+    <categorie id="C8">
+        <libelle>Poésie</libelle>
+    </categorie>
+
+    <categorie id="C9">
+        <libelle>Développement personnel</libelle>
+    </categorie>
+
+    <categorie id="C10">
+        <libelle>Informatique / Technologie</libelle>
+    </categorie>
+
+    <categorie id="C11">
+        <libelle>Art / Culture</libelle>
+    </categorie>
+
+    <categorie id="C12">
+        <libelle>Jeunesse</libelle>
+    </categorie>
+
 </categories>

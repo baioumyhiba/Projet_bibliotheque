@@ -5,6 +5,13 @@
         <password>admin123</password>
         <email>admin@library.com</email>
         <role>admin</role>
+        <profile>
+            <nom>Martin</nom>
+            <prenom>Pierre</prenom>
+            <telephone>+33 6 12 34 56 78</telephone>
+            <dateNaissance>1985-03-20</dateNaissance>
+            <bio>Directeur de la bibliothèque numérique. Spécialisé dans la gestion de contenu numérique et les services bibliothécaires.</bio>
+        </profile>
     </user>
     <user>
         <id>2</id>
@@ -12,6 +19,13 @@
         <password>user123</password>
         <email>student@univ.edu</email>
         <role>user</role>
+        <profile>
+            <nom>Dubois</nom>
+            <prenom>Sophie</prenom>
+            <telephone>+33 6 98 76 54 32</telephone>
+            <dateNaissance>1998-07-15</dateNaissance>
+            <bio>Étudiante universitaire passionnée par la lecture et la recherche scientifique. J'aime explorer les livres de la bibliothèque numérique.</bio>
+        </profile>
     </user>
      <user>
         <id>3</id>
@@ -19,5 +33,25 @@
         <password>auteur123</password>
         <email>auteur@univ.edu</email>
         <role>auteur</role>
+        <profile>
+            <nom>Lefebvre</nom>
+            <prenom>Jean</prenom>
+            <telephone>+33 6 11 22 33 44</telephone>
+            <dateNaissance>1990-05-15</dateNaissance>
+            <bio>Écrivain et auteur spécialisé en littérature et sciences. J'aime partager mes connaissances à travers mes écrits et publier mes ouvrages dans la bibliothèque.</bio>
+        </profile>
     </user>
-<user><id>4</id><username>aya</username><password>ayaassaf</password><email>aya@gmail.com</email><role>user</role></user></users>
+    <user>
+        <id>4</id>
+        <username>aya</username>
+        <password>ayaassaf</password>
+        <email>aya@gmail.com</email>
+        <role>user</role>
+        <profile>
+            <nom>Bernard</nom>
+            <prenom>Marie</prenom>
+            <telephone>+33 6 55 66 77 88</telephone>
+            <dateNaissance>1995-12-10</dateNaissance>
+            <bio>Jeune auteure passionnée de littérature et de poésie. Je cherche à enrichir la bibliothèque avec mes œuvres littéraires et créatives.</bio>
+        </profile>
+    </user><user><id>5</id><username>mmmm</username><password>123456</password><email>mmm@gmail.com</email><role>user</role></user></users>

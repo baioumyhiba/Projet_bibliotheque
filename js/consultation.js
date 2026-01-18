@@ -11,7 +11,8 @@ async function loadConsultation() {
                     <input type="text" 
                            id="search-input" 
                            class="search-input" 
-                           placeholder="Rechercher un livre ou un auteur..."
+                           placeholder=""
+                           data-i18n-placeholder="consultation.search.placeholder"
                            autocomplete="off">
                     <button class="search-btn" onclick="performSearch()">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
@@ -28,8 +29,8 @@ async function loadConsultation() {
                 <!-- Historique de recherche -->
                 <section class="history-section">
                     <div class="history-header">
-                        <h3 class="history-title">Historique de recherche</h3>
-                        <button class="clear-history-btn" onclick="clearSearchHistory()" title="Effacer l'historique">
+                        <h3 class="history-title" data-i18n="consultation.search.title">Historique de recherche</h3>
+                        <button class="clear-history-btn" onclick="clearSearchHistory()" data-i18n-title="consultation.clear.history" title="Effacer l'historique">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="3 6 5 6 21 6"></polyline>
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -42,8 +43,8 @@ async function loadConsultation() {
                 <!-- Historique de téléchargements -->
                 <section class="history-section">
                     <div class="history-header">
-                        <h3 class="history-title">Historique de téléchargements</h3>
-                        <button class="clear-history-btn" onclick="clearDownloadHistory()" title="Effacer l'historique">
+                        <h3 class="history-title" data-i18n="consultation.download.title">Historique de téléchargements</h3>
+                        <button class="clear-history-btn" onclick="clearDownloadHistory()" data-i18n-title="consultation.clear.history" title="Effacer l'historique">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="3 6 5 6 21 6"></polyline>
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -62,22 +63,22 @@ async function loadConsultation() {
                 <div id="book-details" class="book-details-modal">
                     <div class="detail-header">
                         <h3 id="detail-title"></h3>
-                        <button class="detail-close" onclick="closeDetails()">✕ Fermer</button>
+                        <button class="detail-close" onclick="closeDetails()" data-i18n="common.close">✕ Fermer</button>
                     </div>
                     <div class="detail-content">
                         <img id="detail-img" class="detail-image" src="" alt=""/>
                         <div class="detail-info">
                             <div class="detail-meta">
                                 <div class="detail-meta-item">
-                                    <span class="detail-meta-label">Auteur :</span>
+                                    <span class="detail-meta-label" data-i18n="books.details.author">Auteur :</span>
                                     <span class="detail-meta-value" id="detail-author"></span>
                                 </div>
                                 <div class="detail-meta-item">
-                                    <span class="detail-meta-label">Année :</span>
+                                    <span class="detail-meta-label" data-i18n="books.details.year">Année :</span>
                                     <span class="detail-meta-value" id="detail-year"></span>
                                 </div>
                                 <div class="detail-meta-item">
-                                    <span class="detail-meta-label">Catégorie :</span>
+                                    <span class="detail-meta-label" data-i18n="books.details.category">Catégorie :</span>
                                     <span class="detail-meta-value" id="detail-category"></span>
                                 </div>
                             </div>
@@ -92,6 +93,14 @@ async function loadConsultation() {
     // Charger les historiques
     loadSearchHistory();
     loadDownloadHistory();
+
+    // Charger tous les livres par défaut
+    await loadAllBooks();
+    
+    // Appliquer les traductions aux nouveaux éléments créés
+    if (App && App.applyTranslations) {
+        App.applyTranslations();
+    }
 
     // Ajouter les event listeners
     const searchInput = document.getElementById('search-input');
@@ -108,8 +117,59 @@ async function loadConsultation() {
                 showSearchSuggestions(query);
             } else {
                 hideSearchSuggestions();
+                // Si le champ de recherche est vide, recharger tous les livres
+                loadAllBooks();
             }
         });
+    }
+}
+
+// Fonction pour charger et afficher tous les livres
+async function loadAllBooks() {
+    try {
+        // Charger les livres
+        const booksResponse = await fetch(`data/books.xml?v=${Date.now()}`);
+        if (!booksResponse.ok) throw new Error("Erreur lors du chargement des livres");
+        const booksText = await booksResponse.text();
+        const booksParser = new DOMParser();
+        const booksDoc = booksParser.parseFromString(booksText, "application/xml");
+
+        // Charger les auteurs
+        const authorsResponse = await fetch(`data/authors.xml?v=${Date.now()}`);
+        if (!authorsResponse.ok) throw new Error("Erreur lors du chargement des auteurs");
+        const authorsText = await authorsResponse.text();
+        const authorsParser = new DOMParser();
+        const authorsDoc = authorsParser.parseFromString(authorsText, "application/xml");
+
+        // Créer une map des auteurs
+        const authorsMap = new Map();
+        const authors = authorsDoc.getElementsByTagName('auteur');
+        for (let i = 0; i < authors.length; i++) {
+            const author = authors[i];
+            const authorId = author.getAttribute('id');
+            const authorName = author.getElementsByTagName('nom')[0]?.textContent || '';
+            authorsMap.set(authorId, authorName);
+        }
+
+        // Créer une liste de résultats avec tous les livres
+        const books = booksDoc.getElementsByTagName('livre');
+        const results = [];
+        for (let i = 0; i < books.length; i++) {
+            results.push({
+                type: 'book',
+                book: books[i],
+                matchType: 'all'
+            });
+        }
+
+        // Afficher tous les livres
+        await displaySearchResults(results, authorsMap, '');
+    } catch (error) {
+        console.error("Erreur lors du chargement des livres:", error);
+        const resultsContainer = document.getElementById('search-results');
+        if (resultsContainer) {
+            resultsContainer.innerHTML = `<p class="error-message">${translate("consultation.error.loading.books", "Erreur lors du chargement des livres. Veuillez réessayer.")}</p>`;
+        }
     }
 }
 
@@ -120,7 +180,7 @@ async function performSearch() {
 
     const query = searchInput.value.trim();
     if (!query) {
-        alert('Veuillez entrer un terme de recherche');
+        alert(translate("consultation.search.empty", "Veuillez entrer un terme de recherche"));
         return;
     }
 
@@ -213,7 +273,7 @@ async function searchBooksAndAuthors(query) {
         console.error("Erreur lors de la recherche:", error);
         const resultsContainer = document.getElementById('search-results');
         if (resultsContainer) {
-            resultsContainer.innerHTML = '<p class="error-message">Erreur lors de la recherche. Veuillez réessayer.</p>';
+            resultsContainer.innerHTML = `<p class="error-message">${translate("consultation.error.loading", "Erreur lors de la recherche. Veuillez réessayer.")}</p>`;
         }
     }
 }
@@ -253,16 +313,20 @@ async function displaySearchResults(results, authorsMap, query) {
     if (results.length === 0) {
         resultsContainer.innerHTML = `
             <div class="no-results">
-                <p>Aucun résultat trouvé pour "<strong>${query}</strong>"</p>
+                <p>${translate("consultation.no.results", "Aucun résultat trouvé")}${query ? ` ${translate("consultation.no.results.for", "pour")} "<strong>${query}</strong>"` : ''}</p>
             </div>
         `;
         return;
     }
 
+    // Afficher un titre différent selon qu'il s'agit d'une recherche ou de tous les livres
+    const headerTitle = query ? `Résultats de recherche : "${query}"` : 'Tous les livres';
+    const headerSubtitle = query ? `${results.length} résultat${results.length > 1 ? 's' : ''} trouvé${results.length > 1 ? 's' : ''}` : `${results.length} livre${results.length > 1 ? 's' : ''} disponible${results.length > 1 ? 's' : ''}`;
+
     resultsContainer.innerHTML = `
         <div class="results-header">
-            <h3>Résultats de recherche : "${query}"</h3>
-            <p class="results-count">${results.length} résultat${results.length > 1 ? 's' : ''} trouvé${results.length > 1 ? 's' : ''}</p>
+            <h3>${headerTitle}</h3>
+            <p class="results-count">${headerSubtitle}</p>
         </div>
         <div class="results-grid">
             ${results.map(result => {
@@ -281,14 +345,14 @@ async function displaySearchResults(results, authorsMap, query) {
                 for (let i = 0; i < authorRefs.length; i++) {
                     const authId = authorRefs[i].getAttribute('id');
                     if (authId === 'INDISPO') {
-                        authorNames.push('Indisponible');
+                        authorNames.push(translate("books.author.unavailable", "Indisponible"));
                     } else {
-                        const authorName = authorsMap.get(authId) || 'Auteur inconnu';
+                        const authorName = authorsMap.get(authId) || translate("consultation.unknown.author", "Auteur inconnu");
                         authorNames.push(authorName);
                         if (!authorId) authorId = authId;
                     }
                 }
-                const authorsText = authorNames.length > 0 ? authorNames.join(', ') : 'Auteur inconnu';
+                const authorsText = authorNames.length > 0 ? authorNames.join(', ') : translate("consultation.unknown.author", "Auteur inconnu");
 
                 // Récupérer les catégories
                 const categoryRefs = book.getElementsByTagName('categorieRef');
@@ -344,6 +408,15 @@ function hideSearchSuggestions() {
 
 // GESTION DE L'HISTORIQUE DE RECHERCHE
 
+// Obtenir la clé de stockage pour l'historique de recherche de l'utilisateur
+function getSearchHistoryKey() {
+    const currentUser = Auth.currentUser || Auth.checkSession();
+    if (!currentUser || !currentUser.id) {
+        return 'searchHistory_guest';
+    }
+    return `searchHistory_${currentUser.id}`;
+}
+
 // Charger l'historique de recherche
 function loadSearchHistory() {
     const historyContainer = document.getElementById('search-history');
@@ -352,7 +425,7 @@ function loadSearchHistory() {
     const history = getSearchHistory();
     
     if (history.length === 0) {
-        historyContainer.innerHTML = '<p class="empty-history">Aucune recherche récente</p>';
+        historyContainer.innerHTML = `<p class="empty-history">${translate("consultation.no.search.history", "Aucune recherche récente")}</p>`;
         return;
     }
 
@@ -377,8 +450,9 @@ function saveSearchToHistory(query) {
     // Limiter à 10 recherches
     history = history.slice(0, 10);
     
-    // Sauvegarder
-    localStorage.setItem('searchHistory', JSON.stringify(history));
+    // Sauvegarder avec la clé spécifique à l'utilisateur
+    const key = getSearchHistoryKey();
+    localStorage.setItem(key, JSON.stringify(history));
     
     // Recharger l'affichage
     loadSearchHistory();
@@ -387,7 +461,8 @@ function saveSearchToHistory(query) {
 // Récupérer l'historique de recherche
 function getSearchHistory() {
     try {
-        const stored = localStorage.getItem('searchHistory');
+        const key = getSearchHistoryKey();
+        const stored = localStorage.getItem(key);
         return stored ? JSON.parse(stored) : [];
     } catch (e) {
         return [];
@@ -405,13 +480,23 @@ function searchFromHistory(query) {
 
 // Effacer l'historique de recherche
 function clearSearchHistory() {
-    if (confirm('Voulez-vous vraiment effacer l\'historique de recherche ?')) {
-        localStorage.removeItem('searchHistory');
+    if (confirm(translate("consultation.clear.search.confirm", "Voulez-vous vraiment effacer l'historique de recherche ?"))) {
+        const key = getSearchHistoryKey();
+        localStorage.removeItem(key);
         loadSearchHistory();
     }
 }
 
 // GESTION DE L'HISTORIQUE DE TÉLÉCHARGEMENTS
+
+// Obtenir la clé de stockage pour l'historique de téléchargements de l'utilisateur
+function getDownloadHistoryKey() {
+    const currentUser = Auth.currentUser || Auth.checkSession();
+    if (!currentUser || !currentUser.id) {
+        return 'downloadHistory_guest';
+    }
+    return `downloadHistory_${currentUser.id}`;
+}
 
 // Charger l'historique de téléchargements
 function loadDownloadHistory() {
@@ -421,7 +506,7 @@ function loadDownloadHistory() {
     const history = getDownloadHistory();
     
     if (history.length === 0) {
-        historyContainer.innerHTML = '<p class="empty-history">Aucun téléchargement récent</p>';
+        historyContainer.innerHTML = `<p class="empty-history">${translate("consultation.no.download.history", "Aucun téléchargement récent")}</p>`;
         return;
     }
 
@@ -449,8 +534,9 @@ function saveDownloadToHistory(title) {
     // Limiter à 20 téléchargements
     history = history.slice(0, 20);
     
-    // Sauvegarder
-    localStorage.setItem('downloadHistory', JSON.stringify(history));
+    // Sauvegarder avec la clé spécifique à l'utilisateur
+    const key = getDownloadHistoryKey();
+    localStorage.setItem(key, JSON.stringify(history));
     
     // Recharger l'affichage
     loadDownloadHistory();
@@ -459,7 +545,8 @@ function saveDownloadToHistory(title) {
 // Récupérer l'historique de téléchargements
 function getDownloadHistory() {
     try {
-        const stored = localStorage.getItem('downloadHistory');
+        const key = getDownloadHistoryKey();
+        const stored = localStorage.getItem(key);
         return stored ? JSON.parse(stored) : [];
     } catch (e) {
         return [];
@@ -468,8 +555,9 @@ function getDownloadHistory() {
 
 // Effacer l'historique de téléchargements
 function clearDownloadHistory() {
-    if (confirm('Voulez-vous vraiment effacer l\'historique de téléchargements ?')) {
-        localStorage.removeItem('downloadHistory');
+    if (confirm(translate("consultation.clear.history.confirm", "Voulez-vous vraiment effacer l'historique de téléchargements ?"))) {
+        const key = getDownloadHistoryKey();
+        localStorage.removeItem(key);
         loadDownloadHistory();
     }
 }
@@ -525,15 +613,16 @@ async function showDetailsWithMeta(title, img, desc, author, year, category) {
         };
     }
     if (detailDesc) detailDesc.innerText = desc;
-    if (detailAuthor) detailAuthor.innerHTML = author || 'Non spécifié';
-    if (detailYear) detailYear.innerText = year || 'Non spécifiée';
-    if (detailCategory) detailCategory.innerText = category || 'Non spécifiée';
+    if (detailAuthor) detailAuthor.innerHTML = author || translate("books.details.not.specified", "Non spécifié");
+    if (detailYear) detailYear.innerText = year || translate("books.details.not.specified", "Non spécifiée");
+    if (detailCategory) detailCategory.innerText = category || translate("books.details.not.specified", "Non spécifiée");
     
     detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // Exposer les fonctions globalement
 window.loadConsultation = loadConsultation;
+window.loadAllBooks = loadAllBooks;
 window.performSearch = performSearch;
 window.searchFromHistory = searchFromHistory;
 window.clearSearchHistory = clearSearchHistory;

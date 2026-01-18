@@ -1,0 +1,140 @@
+@startuml Diagramme de Cas d'Utilisation - Bibliothèque Numérique
+
+!define ACTOR_COLOR #4c95af
+!define USE_CASE_COLOR #f8f9fa
+
+skinparam actor {
+    BackgroundColor ACTOR_COLOR
+    BorderColor #131b48
+}
+
+skinparam usecase {
+    BackgroundColor USE_CASE_COLOR
+    BorderColor #131b48
+}
+
+skinparam package {
+    BackgroundColor #e9ecef
+    BorderColor #4c95af
+}
+
+' Acteurs
+actor "Visiteur\n(Anonyme)" as Visiteur
+actor "Utilisateur" as User #4c95af
+actor "Auteur" as Auteur #4c95af
+actor "Administrateur" as Admin #4c95af
+
+' Package Authentification
+package "Authentification" {
+    (S'inscrire) as UC_Register
+    (Se connecter) as UC_Login
+    (Se déconnecter) as UC_Logout
+    (Gérer les utilisateurs) as UC_ManageUsers
+}
+
+' Package Consultation
+package "Consultation" {
+    (Consulter l'accueil) as UC_Home
+    (Rechercher des livres) as UC_Search
+    (Rechercher des auteurs) as UC_SearchAuthors
+    (Consulter les détails d'un livre) as UC_ViewBookDetails
+    (Consulter l'historique de recherche) as UC_ViewSearchHistory
+    (Consulter l'historique de téléchargements) as UC_ViewDownloadHistory
+    (Télécharger un livre en PDF) as UC_DownloadPDF
+}
+
+' Package Gestion des Livres
+package "Gestion des Livres" {
+    (Ajouter un livre) as UC_AddBook
+    (Modifier un livre) as UC_EditBook
+    (Supprimer un livre) as UC_DeleteBook
+    (Enrichir les données d'auteur) as UC_EnrichAuthors
+    (Enrichir les catégories) as UC_EnrichCategories
+}
+
+' Package Gestion des Auteurs
+package "Gestion des Auteurs" {
+    (Ajouter un auteur) as UC_AddAuthor
+    (Modifier un auteur) as UC_EditAuthor
+    (Supprimer un auteur) as UC_DeleteAuthor
+    (Consulter les livres d'un auteur) as UC_ViewAuthorBooks
+}
+
+' Package Statistiques
+package "Statistiques et Accueil" {
+    (Consulter les statistiques par catégorie) as UC_ViewCategoryStats
+    (Consulter les derniers livres) as UC_ViewRecentBooks
+    (Consulter les suggestions de livres) as UC_ViewPopularBooks
+}
+
+' Package Internationalisation
+package "Internationalisation" {
+    (Changer de langue) as UC_ChangeLanguage
+}
+
+' Relations Visiteur
+Visiteur --> UC_Register
+Visiteur --> UC_Login
+
+' Relations Utilisateur
+User --> UC_Login
+User --> UC_Logout
+User --> UC_Home
+User --> UC_Search
+User --> UC_SearchAuthors
+User --> UC_ViewBookDetails
+User --> UC_ViewSearchHistory
+User --> UC_ViewDownloadHistory
+User --> UC_DownloadPDF
+User --> UC_ChangeLanguage
+
+' Relations Auteur
+Auteur --> UC_Login
+Auteur --> UC_Logout
+Auteur --> UC_Home
+Auteur --> UC_Search
+Auteur --> UC_SearchAuthors
+Auteur --> UC_ViewBookDetails
+Auteur --> UC_AddBook
+Auteur --> UC_EditBook
+Auteur --> UC_DeleteBook
+Auteur --> UC_DownloadPDF
+Auteur --> UC_ViewCategoryStats
+Auteur --> UC_ViewRecentBooks
+Auteur --> UC_ViewPopularBooks
+Auteur --> UC_ChangeLanguage
+
+' Relations Administrateur
+Admin --> UC_Login
+Admin --> UC_Logout
+Admin --> UC_ManageUsers
+Admin --> UC_Home
+Admin --> UC_Search
+Admin --> UC_SearchAuthors
+Admin --> UC_ViewBookDetails
+Admin --> UC_AddBook
+Admin --> UC_EditBook
+Admin --> UC_DeleteBook
+Admin --> UC_AddAuthor
+Admin --> UC_EditAuthor
+Admin --> UC_DeleteAuthor
+Admin --> UC_ViewAuthorBooks
+Admin --> UC_DownloadPDF
+Admin --> UC_ViewCategoryStats
+Admin --> UC_ViewRecentBooks
+Admin --> UC_ViewPopularBooks
+Admin --> UC_EnrichAuthors
+Admin --> UC_EnrichCategories
+Admin --> UC_ChangeLanguage
+
+' Relations d'inclusion/extension
+UC_Search ..> UC_ViewSearchHistory : <<include>>
+UC_DownloadPDF ..> UC_ViewDownloadHistory : <<include>>
+UC_EditBook ..> UC_EnrichAuthors : <<include>>
+UC_EditBook ..> UC_EnrichCategories : <<include>>
+UC_DeleteAuthor ..> UC_EnrichAuthors : <<include>>
+UC_ViewAuthorBooks ..> UC_EnrichAuthors : <<include>>
+
+@enduml
+
+

@@ -27,8 +27,223 @@
     "menu.manage_books": "إدارة الكتب",
     "menu.manage_authors": "إدارة المؤلفين",
     "menu.manage_users": "إدارة المستخدمين",
+    "menu.manage_categories": "إدارة الفئات",
+    "menu.profile": "ملفي الشخصي",
     "menu.logout": "خروج",
     "welcome.message": "مرحباً بكم في المكتبة الرقمية",
     "role.label": "دورك: ",
-    "user.label": "المستخدم: "
+    "user.label": "المستخدم: ",
+    "consultation.search.placeholder": "البحث عن كتاب أو مؤلف...",
+    "consultation.search.title": "تاريخ البحث",
+    "consultation.download.title": "تاريخ التحميل",
+    "consultation.clear.history": "مسح التاريخ",
+    "consultation.no.search.history": "لا توجد عمليات بحث حديثة",
+    "consultation.no.download.history": "لا توجد تحميلات حديثة",
+    "consultation.search.empty": "يرجى إدخال مصطلح البحث",
+    "consultation.clear.search.confirm": "هل تريد حقاً مسح تاريخ البحث؟",
+    "consultation.clear.download.confirm": "هل تريد حقاً مسح تاريخ التحميل؟",
+    "consultation.results.title": "نتائج البحث:",
+    "consultation.all.books": "جميع الكتب",
+    "consultation.results.count": "نتيجة/نتائج",
+    "consultation.books.count": "كتاب/كتب متاح",
+    "consultation.no.results": "لم يتم العثور على نتائج",
+    "consultation.details": "التفاصيل",
+    "consultation.download.pdf": "تحميل PDF",
+    "consultation.close": "إغلاق",
+    "consultation.author": "المؤلف:",
+    "consultation.year": "السنة:",
+    "consultation.category": "الفئة:",
+    "consultation.not.specified": "غير محدد",
+    "consultation.loading": "جاري التحميل...",
+    "consultation.unknown.author": "مؤلف غير معروف",
+    "consultation.unknown.title": "بدون عنوان",
+    "consultation.error.loading": "خطأ أثناء البحث. يرجى المحاولة مرة أخرى.",
+    "consultation.error.loading.books": "خطأ في تحميل الكتب. يرجى المحاولة مرة أخرى.",
+    "categories.title": "إدارة الفئات",
+    "categories.add": "إضافة فئة",
+    "categories.add.title": "إضافة فئة",
+    "categories.edit.title": "تعديل الفئة",
+    "categories.label": "التسمية *",
+    "categories.label.placeholder": "أدخل تسمية الفئة",
+    "categories.save": "حفظ",
+    "categories.cancel": "إلغاء",
+    "categories.edit": "تعديل",
+    "categories.delete": "حذف",
+    "categories.load.error": "خطأ في تحميل الفئة",
+    "categories.label.required": "التسمية مطلوبة",
+    "categories.save.success": "تم تعديل الفئة بنجاح!",
+    "categories.add.success": "تمت إضافة الفئة بنجاح!",
+    "categories.delete.success": "تم حذف الفئة بنجاح!",
+    "categories.delete.confirm": "هل أنت متأكد من حذف هذه الفئة؟\n\nملاحظة: قد تؤثر هذه العملية على الكتب المرتبطة بهذه الفئة.",
+    "categories.save.error": "خطأ في حفظ الفئة",
+    "categories.delete.error": "خطأ في حذف الفئة",
+    "categories.server.unavailable": "(ملاحظة: خادم الحفظ غير متاح)",
+    "books.title": "فهرس الكتب",
+    "books.add": "إضافة كتاب",
+    "books.add.title": "إضافة كتاب",
+    "books.edit.title": "تعديل الكتاب",
+    "books.title.label": "العنوان *",
+    "books.title.placeholder": "أدخل عنوان الكتاب",
+    "books.author": "المؤلف *",
+    "books.author.select": "اختر مؤلفاً...",
+    "books.author.loading": "جاري تحميل المؤلفين...",
+    "books.description": "الوصف *",
+    "books.description.placeholder": "أدخل وصف الكتاب",
+    "books.year": "سنة النشر *",
+    "books.year.placeholder": "مثال: 2024",
+    "books.isbn": "الرقم المعياري",
+    "books.isbn.placeholder": "مثال: 978-2-07-040919-6",
+    "books.categories": "الفئات",
+    "books.categories.loading": "جاري تحميل الفئات...",
+    "books.categories.hint": "اضغط على Ctrl (Windows) أو Cmd (Mac) لتحديد فئات متعددة",
+    "books.availability": "التوفر *",
+    "books.available": "متاح",
+    "books.unavailable": "غير متاح",
+    "books.image": "الصورة",
+    "books.save": "حفظ",
+    "books.cancel": "إلغاء",
+    "books.save.success": "تمت إضافة الكتاب بنجاح وحفظه في ملف XML!",
+    "books.edit.success": "تم تعديل الكتاب بنجاح وحفظه في ملف XML!",
+    "books.delete.confirm": "هل أنت متأكد من حذف \"{title}\"؟",
+    "books.delete.success": "تم حذف الكتاب بنجاح وحفظه في ملف XML!",
+    "books.no.books": "ليس لديك أي كتب في المكتبة.",
+    "books.no.books.general": "لا توجد كتب متاحة في الوقت الحالي.",
+    "books.author.label": "✍️ المؤلف:",
+    "books.author.loading.label": "جاري التحميل...",
+    "books.author.unavailable": "غير متاح",
+    "books.year.label": "📅 السنة:",
+    "books.category.label": "🏷️ الفئة:",
+    "books.category.loading": "جاري التحميل...",
+    "books.isbn.label": "📖 الرقم المعياري:",
+    "books.details.title": "عرض التفاصيل",
+    "books.download.title": "تحميل كـ PDF",
+    "books.edit.button": "تعديل الكتاب",
+    "books.delete.button": "حذف الكتاب",
+    "books.details.close": "إغلاق",
+    "books.details.author": "المؤلف:",
+    "books.details.year": "السنة:",
+    "books.details.category": "الفئة:",
+    "books.details.not.specified": "غير محدد",
+    "books.pdf.error": "خطأ: مكتبة PDF غير محملة. يرجى إعادة تحميل الصفحة.",
+    "books.pdf.generate.error": "خطأ في إنشاء PDF. يرجى المحاولة مرة أخرى.",
+    "books.author.warning": "تحذير: المؤلف {authorId} غير موجود في authors.xml. يرجى إنشاء هذا المؤلف أولاً.",
+    "books.server.unavailable": "(ملاحظة: خادم الحفظ غير متاح، سيتم فقدان التغييرات عند إعادة التحميل)",
+    "books.load.error": "خطأ في تحميل الكتب",
+    "authors.title": "قائمة المؤلفين وكتبهم",
+    "authors.add": "إضافة مؤلف",
+    "authors.add.title": "إضافة مؤلف جديد",
+    "authors.edit.title": "تعديل المؤلف",
+    "authors.name": "اسم المؤلف *",
+    "authors.name.new": "اسم مؤلف جديد *",
+    "authors.name.placeholder": "أدخل اسم المؤلف",
+    "authors.select.existing": "اختر مؤلفاً موجوداً...",
+    "authors.select.new": "+ إضافة اسم جديد",
+    "authors.country": "البلد *",
+    "authors.save": "حفظ",
+    "authors.cancel": "إلغاء",
+    "authors.edit": "تعديل المؤلف",
+    "authors.delete": "حذف المؤلف",
+    "authors.books": "الكتب",
+    "authors.no.books": "لا توجد كتب مرتبطة بهذا المؤلف",
+    "authors.loading": "جاري التحميل...",
+    "authors.unknown.title": "عنوان غير معروف",
+    "authors.year": "السنة:",
+    "authors.isbn": "الرقم المعياري:",
+    "authors.availability": "التوفر:",
+    "authors.available": "✅ متاح",
+    "authors.unavailable": "❌ غير متاح",
+    "authors.no.info": "لا توجد معلومات إضافية",
+    "authors.book.not.found": "(الكتاب غير موجود)",
+    "authors.load.error": "خطأ في تحميل المؤلفين.",
+    "authors.not.found": "المؤلف غير موجود",
+    "authors.load.error.edit": "خطأ في تحميل المؤلف",
+    "authors.fill.all": "يرجى ملء جميع الحقول",
+    "authors.save.success": "تم تعديل المؤلف بنجاح وحفظه في ملف XML!",
+    "authors.add.success": "تمت إضافة المؤلف بنجاح وحفظه في ملف XML!",
+    "authors.delete.confirm": "هل أنت متأكد من حذف هذا المؤلف؟\nسيتم حذف جميع المراجع لهذا المؤلف في الكتب أيضاً.",
+    "authors.delete.success": "تم حذف المؤلف بنجاح وحفظه في ملف XML!",
+    "authors.delete.title": "حذف المؤلف",
+    "authors.save.error": "خطأ في حفظ المؤلف",
+    "authors.delete.error": "خطأ في حذف المؤلف",
+    "authors.server.unavailable": "(ملاحظة: خادم الحفظ غير متاح، سيتم فقدان التغييرات عند إعادة التحميل)",
+    "users.title": "إدارة المستخدمين",
+    "users.add": "إضافة مستخدم",
+    "users.add.title": "إضافة مستخدم",
+    "users.edit.title": "تعديل المستخدم",
+    "users.manage.title": "إدارة المستخدم",
+    "users.username": "اسم المستخدم:",
+    "users.email": "البريد الإلكتروني:",
+    "users.password": "كلمة المرور:",
+    "users.password.hint": "اتركه فارغاً للحفاظ على التغيير",
+    "users.role": "الدور:",
+    "users.role.user": "مستخدم",
+    "users.role.author": "مؤلف",
+    "users.role.admin": "مدير",
+    "users.save": "حفظ",
+    "users.cancel": "إلغاء",
+    "users.edit": "تعديل",
+    "users.delete": "حذف",
+    "users.id": "المعرف:",
+    "users.load.error": "خطأ في تحميل المستخدمين.",
+    "users.not.found": "المستخدم غير موجود",
+    "users.load.error.edit": "خطأ في تحميل المستخدم",
+    "users.fill.required": "يرجى ملء جميع الحقول المطلوبة",
+    "users.password.required": "كلمة المرور مطلوبة للمستخدم الجديد",
+    "users.username.exists": "اسم المستخدم هذا مستخدم بالفعل",
+    "users.email.exists": "البريد الإلكتروني هذا مستخدم بالفعل",
+    "users.save.success": "تم تعديل المستخدم بنجاح وحفظه في ملف XML!",
+    "users.add.success": "تمت إضافة المستخدم بنجاح وحفظه في ملف XML!",
+    "users.delete.confirm": "هل أنت متأكد من حذف هذا المستخدم؟",
+    "users.delete.self": "لا يمكنك حذف حسابك الخاص!",
+    "users.delete.success": "تم حذف المستخدم بنجاح وحفظه في ملف XML!",
+    "users.save.error": "خطأ في حفظ المستخدم",
+    "users.delete.error": "خطأ في حذف المستخدم",
+    "users.server.unavailable": "(ملاحظة: خادم الحفظ غير متاح، سيتم فقدان التغييرات عند إعادة التحميل)",
+    "profile.title": "ملفي الشخصي",
+    "profile.edit": "تعديل ملفي الشخصي",
+    "profile.contact": "معلومات الاتصال",
+    "profile.personal": "المعلومات الشخصية",
+    "profile.bio": "السيرة الذاتية",
+    "profile.email": "البريد الإلكتروني",
+    "profile.phone": "الهاتف",
+    "profile.name": "الاسم",
+    "profile.firstname": "الاسم الأول",
+    "profile.birthdate": "تاريخ الميلاد",
+    "profile.phone.placeholder": "مثال: +33 6 12 34 56 78",
+    "profile.bio.placeholder": "اكتب شيئاً عن نفسك...",
+    "profile.not.filled": "غير مملوء",
+    "profile.load.error": "خطأ في تحميل الملف الشخصي.",
+    "profile.user.not.found": "المستخدم غير موجود",
+    "profile.load.error.edit": "خطأ في تحميل الملف الشخصي",
+    "profile.save.error": "خطأ في حفظ الملف الشخصي",
+    "profile.user.not.connected": "خطأ: المستخدم غير متصل",
+    "profile.email.required": "البريد الإلكتروني مطلوب",
+    "profile.email.exists": "البريد الإلكتروني هذا مستخدم بالفعل من قبل مستخدم آخر",
+    "profile.save.success": "تم تعديل الملف الشخصي بنجاح!",
+    "profile.save.error.server": "خطأ في حفظ الملف الشخصي. سيتم فقدان التغييرات عند إعادة التحميل.",
+    "home.category.title": "التوزيع حسب الفئة",
+    "home.recent.title": "الكتب المضافة مؤخراً",
+    "home.popular.title": "اقتراحات الكتب الشائعة",
+    "home.no.category": "لم يتم العثور على فئة",
+    "home.no.books": "لا توجد كتب متاحة",
+    "home.no.books.recent": "لا توجد كتب حديثة",
+    "home.book.singular": "كتاب",
+    "home.book.plural": "كتب",
+    "consultation.no.results.for": "لـ",
+    "dashboard.module.content": "محتوى الوحدة...",
+    "register.error.unavailable": "خطأ: وظيفة التسجيل غير متاحة. يرجى إعادة تحميل الصفحة.",
+    "common.error.loading": "خطأ في التحميل",
+    "common.loading": "جاري التحميل...",
+    "common.error": "خطأ",
+    "common.success": "نجح",
+    "common.cancel": "إلغاء",
+    "common.save": "حفظ",
+    "common.delete": "حذف",
+    "common.edit": "تعديل",
+    "common.close": "إغلاق",
+    "common.confirm": "تأكيد",
+    "common.yes": "نعم",
+    "common.no": "لا",
+    "common.error.server": "خطأ في الخادم",
+    "common.error.save": "خطأ في الحفظ"
 }

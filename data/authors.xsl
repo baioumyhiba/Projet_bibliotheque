@@ -235,8 +235,8 @@
                 }
             </style>
             <div class="authors-actions">
-                <h2>Liste des auteurs et leurs livres</h2>
-                <button class="btn-add" onclick="showAddAuthorForm()">+ Ajouter un auteur</button>
+                <h2 data-i18n="authors.title">Liste des auteurs et leurs livres</h2>
+                <button class="btn-add" onclick="showAddAuthorForm()" data-i18n="authors.add">+ Ajouter un auteur</button>
             </div>
             <xsl:for-each select="auteurs/auteur">
                 <div class="auteur-card" data-author-id="{@id}">
@@ -247,6 +247,7 @@
                     <div class="auteur-actions">
                         <button class="action-icon-btn btn-edit" 
                                 title="Modifier l'auteur"
+                                data-i18n-title="authors.edit.title"
                                 onclick="editAuthor('{@id}')">
                             <svg viewBox="0 0 24 24">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -255,6 +256,7 @@
                         </button>
                         <button class="action-icon-btn btn-delete" 
                                 title="Supprimer l'auteur"
+                                data-i18n-title="authors.delete.title"
                                 onclick="deleteAuthor('{@id}')">
                             <svg viewBox="0 0 24 24">
                                 <polyline points="3 6 5 6 21 6"></polyline>
@@ -265,20 +267,20 @@
                         </button>
                     </div>
                     <div class="livres-section">
-                        <div class="livres-section-title">Livres</div>
+                        <div class="livres-section-title" data-i18n="authors.books">Livres</div>
                         <xsl:choose>
                             <xsl:when test="livres/livreref">
                                 <ul class="livres-list">
                                     <xsl:for-each select="livres/livreref">
                                         <li class="livre-item" data-book-id="{@idLivre}">
-                                            <span class="livre-titre">Chargement...</span>
+                                            <span class="livre-titre" data-i18n="common.loading">Chargement...</span>
                                             <div class="livre-details"></div>
                                         </li>
                                     </xsl:for-each>
                                 </ul>
                             </xsl:when>
                             <xsl:otherwise>
-                                <div class="no-books">Aucun livre associé à cet auteur</div>
+                                <div class="no-books" data-i18n="authors.no.books">Aucun livre associé à cet auteur</div>
                             </xsl:otherwise>
                         </xsl:choose>
                     </div>

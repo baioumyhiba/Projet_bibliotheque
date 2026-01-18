@@ -57,7 +57,7 @@ const App = {
 
         } catch (e) {
             console.error("Language loading failed:", e);
-            alert("Erreur de chargement de la langue (vérifiez que vous utilisez un serveur local). \nError: " + e.message);
+            alert(translate("app.error.language.load", "Erreur de chargement de la langue (vérifiez que vous utilisez un serveur local). \nError: ") + e.message);
         }
     },
 
@@ -110,6 +110,16 @@ const App = {
         await this.loadLanguage(lang);
     },
 
+    /**
+     * Helper function to get translation
+     * @param {string} key - Translation key
+     * @param {string} defaultValue - Default value if translation not found
+     * @returns {string} Translated text
+     */
+    translate: function (key, defaultValue = '') {
+        return this.translations[key] || defaultValue || key;
+    },
+
     handleLogin: async function (e) {
         e.preventDefault();
         const userIn = document.getElementById('username').value;
@@ -142,7 +152,7 @@ const App = {
 
         // Update Welcome Message - Afficher uniquement le nom d'utilisateur
         const userRoleDisplay = document.getElementById('user-role-display');
-        if (userRoleDisplay) userRoleDisplay.textContent = user.username || user.email || 'Utilisateur';
+        if (userRoleDisplay) userRoleDisplay.textContent = user.username || user.email || translate("user.label", "Utilisateur");
 
         // Render Menu via XSLT
         await this.renderMenu(user.role);
@@ -162,13 +172,13 @@ const App = {
         try {
             // Load XML
             const xmlResp = await fetch('data/users/menus.xml');
-            if (!xmlResp.ok) throw new Error("Failed to load menus.xml");
+            if (!xmlResp.ok) throw new Error(translate("app.error.load.menus.xml", "Failed to load menus.xml"));
             const xmlText = await xmlResp.text();
             const xmlDoc = new DOMParser().parseFromString(xmlText, 'application/xml');
 
             // Load XSL
             const xslResp = await fetch('data/users/menus.xsl');
-            if (!xslResp.ok) throw new Error("Failed to load menus.xsl");
+            if (!xslResp.ok) throw new Error(translate("app.error.load.menus.xsl", "Failed to load menus.xsl"));
             const xslText = await xslResp.text();
             const xslDoc = new DOMParser().parseFromString(xslText, 'application/xml');
 
@@ -208,8 +218,8 @@ const App = {
             modal.onclick = function(e) {
                 if (e.target === modal) {
                     App.closeRegisterModal();
-                }
-            };
+    }
+};
         }
     },
 
@@ -255,7 +265,7 @@ const App = {
             // Vérifier que Auth.register existe
             if (!Auth || typeof Auth.register !== 'function') {
                 console.error('Auth.register is not available. Make sure auth.js is loaded correctly.');
-                msgEl.textContent = "Erreur: La fonction d'inscription n'est pas disponible. Veuillez recharger la page.";
+                msgEl.textContent = translate("register.error.unavailable", "Erreur: La fonction d'inscription n'est pas disponible. Veuillez recharger la page.");
                 msgEl.style.color = 'red';
                 return;
             }
@@ -344,6 +354,8 @@ window.addEventListener('DOMContentLoaded', () => {
 // Global helpers for HTML onclick
 window.switchLang = (l) => App.switchLang(l);
 window.logout = () => App.logout();
+// Global translation helper
+window.translate = (key, defaultValue) => App.translate(key, defaultValue);
 window.toggleMenu = function() {
     const sidebar = document.getElementById('sidebar-menu');
     if (sidebar) {
@@ -401,6 +413,33 @@ window.navigate = async (hash) => {
             await loadConsultation();
         } else {
             console.error("loadConsultation function not found");
+        }
+        return;
+    }
+    
+    if (hash === '#users') {
+        if (typeof loadUsers === 'function') {
+            await loadUsers();
+        } else {
+            console.error("loadUsers function not found");
+        }
+        return;
+    }
+    
+    if (hash === '#categories') {
+        if (typeof loadCategories === 'function') {
+            await loadCategories();
+        } else {
+            console.error("loadCategories function not found");
+        }
+        return;
+    }
+    
+    if (hash === '#profile') {
+        if (typeof loadProfile === 'function') {
+            await loadProfile();
+        } else {
+            console.error("loadProfile function not found");
         }
         return;
     }

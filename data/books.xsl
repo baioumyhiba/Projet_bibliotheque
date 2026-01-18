@@ -430,7 +430,17 @@
         background: linear-gradient(135deg, #4c95af 0%, #3a7a8f 100%);
         color: white;
     }
-
+    .btn-save:hover {
+        background: #3a7a8f;
+    }
+    .btn-save {
+    padding: 10px 20px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    font-weight: 600;
+    }
     .btn-cancel {
         background: #6c757d;
         color: white;
@@ -551,9 +561,6 @@
 
 <div class="books-header">
     <h1>Catalogue des Livres</h1>
-    <xsl:if test="$isAdmin='true'">
-        <button class="btn-add-book" onclick="openAddModal()">+ Ajouter un livre</button>
-    </xsl:if>
 </div>
 
 <!-- Popup Modifier / Ajouter -->
@@ -565,27 +572,49 @@
         </div>
         <form id="edit-form">
             <div class="form-group">
-                <label for="edit-titre">Titre *</label>
-                <input type="text" id="edit-titre" required="required" placeholder="Entrez le titre du livre"/>
+                <label for="edit-titre" data-i18n="books.title.label">Titre *</label>
+                <input type="text" id="edit-titre" required="required" data-i18n-placeholder="books.title.placeholder"/>
             </div>
             <div class="form-group">
-                <label for="edit-auteur">Auteur *</label>
+                <label for="edit-auteur" data-i18n="books.author">Auteur *</label>
                 <select id="edit-auteur" required="required">
-                    <option value="">Sélectionnez un auteur...</option>
+                    <option value="" data-i18n="books.author.select">Sélectionnez un auteur...</option>
                 </select>
-                <small id="auteur-loading" style="color: #6c757d; font-size: 0.85rem; display: block; margin-top: 5px;">Chargement des auteurs...</small>
+                <small id="auteur-loading" style="color: #6c757d; font-size: 0.85rem; display: block; margin-top: 5px;" data-i18n="books.author.loading">Chargement des auteurs...</small>
             </div>
             <div class="form-group">
-                <label for="edit-desc">Description *</label>
-                <textarea id="edit-desc" required="required" placeholder="Entrez la description du livre"></textarea>
+                <label for="edit-desc" data-i18n="books.description">Description *</label>
+                <textarea id="edit-desc" required="required" data-i18n-placeholder="books.description.placeholder"></textarea>
             </div>
             <div class="form-group">
-                <label for="edit-img-file">Image</label>
+                <label for="edit-annee" data-i18n="books.year">Année de publication *</label>
+                <input type="number" id="edit-annee" required="required" min="1000" max="9999" data-i18n-placeholder="books.year.placeholder" value="2024"/>
+            </div>
+            <div class="form-group">
+                <label for="edit-isbn" data-i18n="books.isbn">ISBN</label>
+                <input type="text" id="edit-isbn" data-i18n-placeholder="books.isbn.placeholder"/>
+            </div>
+            <div class="form-group">
+                <label for="edit-categories" data-i18n="books.categories">Catégories</label>
+                <select id="edit-categories" multiple="multiple" style="min-height: 100px;">
+                    <option value="" data-i18n="books.categories.loading">Chargement des catégories...</option>
+                </select>
+                <small style="color: #6c757d; font-size: 0.85rem; display: block; margin-top: 5px;" data-i18n="books.categories.hint">Maintenez Ctrl (Windows) ou Cmd (Mac) pour sélectionner plusieurs catégories</small>
+            </div>
+            <div class="form-group">
+                <label for="edit-disponibilite" data-i18n="books.availability">Disponibilité *</label>
+                <select id="edit-disponibilite" required="required">
+                    <option value="true" selected="selected" data-i18n="books.available">Disponible</option>
+                    <option value="false" data-i18n="books.unavailable">Indisponible</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="edit-img-file" data-i18n="books.image">Image</label>
                 <input type="file" id="edit-img-file" accept="image/*"/>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn-cancel" onclick="closeEditModal()">Annuler</button>
-                <button type="submit" class="btn-save">Enregistrer</button>
+                <button type="button" class="btn-cancel" onclick="closeEditModal()" data-i18n="common.cancel">Annuler</button>
+                <button type="submit" class="btn-save" data-i18n="common.save">Enregistrer</button>
             </div>
         </form>
     </div>
@@ -610,7 +639,7 @@
       </div>
       <div class="book-content">
         <div class="book-title"><xsl:value-of select="titre"/></div>
-        <div class="book-author" data-auteur-id="{authors/auteurRef/@id}">✍️ Auteur: <span class="auteur-name">Chargement...</span></div>
+        <div class="book-author" data-auteur-id="{authors/auteurRef/@id}"><span data-i18n="books.author.label">✍️ Auteur:</span> <span class="auteur-name" data-i18n="books.author.loading.label">Chargement...</span></div>
         <div class="book-desc"><xsl:value-of select="description"/></div>
         <div class="book-info">
           <div class="book-info-item">
@@ -625,14 +654,14 @@
                   <xsl:if test="position() != last()">,</xsl:if>
                 </xsl:for-each>
               </xsl:attribute>
-              <span class="categorie-loading">Chargement...</span>
+              <span class="categorie-loading" data-i18n="categories.loading">Chargement...</span>
             </span>
           </div>
           <div class="book-info-item">
-            <strong>Disponibilité:</strong>
+            <strong data-i18n="books.availability">Disponibilité:</strong>
             <xsl:choose>
-              <xsl:when test="disponibilite='true'"><span class="available">Disponible</span></xsl:when>
-              <xsl:otherwise><span class="not-available">Indisponible</span></xsl:otherwise>
+              <xsl:when test="disponibilite='true'"><span class="available" data-i18n="books.availability.available">Disponible</span></xsl:when>
+              <xsl:otherwise><span class="not-available" data-i18n="books.availability.unavailable">Indisponible</span></xsl:otherwise>
             </xsl:choose>
           </div>
           <xsl:if test="isbn">
@@ -644,6 +673,7 @@
         <div class="book-actions">
           <button class="action-icon-btn details-btn" 
                   title="Voir les détails"
+                  data-i18n-title="books.details.title"
                   data-title="{titre}" 
                   data-image="{image}" 
                   data-description="{description}">
@@ -657,6 +687,7 @@
           </button>
           <button class="action-icon-btn download-btn"
                   title="Télécharger en PDF"
+                  data-i18n-title="books.download.title"
                   data-title="{titre}"
                   data-image="{image}"
                   data-description="{description}"
@@ -673,6 +704,7 @@
           <xsl:if test="$isAdmin='true'">
             <button class="action-icon-btn admin-btn"
                     title="Modifier le livre"
+                    data-i18n-title="books.edit.title"
                     data-title="{titre}"
                     data-auteur="{authors/auteurRef/@id}"
                     data-description="{description}"
@@ -687,6 +719,7 @@
             </button>
             <button class="action-icon-btn btn-delete"
                     title="Supprimer le livre"
+                    data-i18n-title="books.delete.button"
                     data-title="{titre}">
               <xsl:attribute name="onclick">
                 <xsl:text>deleteBookConfirm(this.getAttribute(&quot;data-title&quot;))</xsl:text>

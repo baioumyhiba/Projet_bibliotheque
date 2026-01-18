@@ -35,6 +35,10 @@ async function loadAuthors() {
                 // Enrichir les livres après la transformation (petit délai pour s'assurer que le DOM est prêt)
                 setTimeout(() => {
                     enrichBooks(booksDoc);
+                    // Appliquer les traductions aux nouveaux éléments créés
+                    if (App && App.applyTranslations) {
+                        App.applyTranslations();
+                    }
                 }, 100);
             }
         } else {
@@ -44,7 +48,7 @@ async function loadAuthors() {
         console.error("Authors loading failed", e);
         const workspace = document.getElementById('workspace');
         if (workspace) {
-            workspace.innerHTML = '<p style="color: red;">Erreur lors du chargement des auteurs.</p>';
+            workspace.innerHTML = `<p style="color: red;">${translate("authors.load.error", "Erreur lors du chargement des auteurs")}.</p>`;
         }
     }
 }
@@ -78,7 +82,7 @@ function enrichBooks(booksDoc) {
             const isbnEl = book.getElementsByTagName('isbn')[0];
             const disponibiliteEl = book.getElementsByTagName('disponibilite')[0];
             
-            const titre = titreEl ? titreEl.textContent : 'Titre inconnu';
+            const titre = titreEl ? titreEl.textContent : translate("authors.unknown.title", "Titre inconnu");
             const annee = anneeEl ? anneeEl.textContent : '';
             const isbn = isbnEl ? isbnEl.textContent : '';
             const disponibilite = disponibiliteEl ? disponibiliteEl.textContent : '';
@@ -87,20 +91,20 @@ function enrichBooks(booksDoc) {
             
             let detailsHTML = '';
             if (annee) {
-                detailsHTML += `<span class="livre-detail-item"><strong>Année:</strong> ${annee}</span>`;
+                detailsHTML += `<span class="livre-detail-item"><strong>${translate("authors.year", "Année")}:</strong> ${annee}</span>`;
             }
             if (isbn) {
-                detailsHTML += `<span class="livre-detail-item"><strong>ISBN:</strong> ${isbn}</span>`;
+                detailsHTML += `<span class="livre-detail-item"><strong>${translate("authors.isbn", "ISBN")}:</strong> ${isbn}</span>`;
             }
             if (disponibilite) {
-                const disponibiliteText = disponibilite === 'true' ? '✅ Disponible' : '❌ Non disponible';
-                detailsHTML += `<span class="livre-detail-item"><strong>Disponibilité:</strong> ${disponibiliteText}</span>`;
+                const disponibiliteText = disponibilite === 'true' ? translate("authors.available", "✅ Disponible") : translate("authors.unavailable", "❌ Non disponible");
+                detailsHTML += `<span class="livre-detail-item"><strong>${translate("authors.availability", "Disponibilité")}:</strong> ${disponibiliteText}</span>`;
             }
             
-            detailsDiv.innerHTML = detailsHTML || '<span class="livre-details">Aucune information supplémentaire</span>';
+            detailsDiv.innerHTML = detailsHTML || `<span class="livre-details">${translate("authors.no.info", "Aucune information supplémentaire")}</span>`;
         } else if (livreTitre && detailsDiv) {
-            livreTitre.textContent = `Livre ID: ${bookId}`;
-            detailsDiv.innerHTML = '<span class="livre-details">(Livre non trouvé)</span>';
+            livreTitre.textContent = `${translate("books.id.label", "Livre ID")}: ${bookId}`;
+            detailsDiv.innerHTML = `<span class="livre-details">${translate("authors.book.not.found", "(Livre non trouvé)")}</span>`;
         }
     });
 }
@@ -189,17 +193,61 @@ function showModal(title, formHTML) {
                 color: #131b48;
                 font-weight: 600;
             }
-            .form-group input {
+            .form-group input,
+            .form-group select {
                 width: 100%;
                 padding: 12px;
                 border: 2px solid #e1e5eb;
                 border-radius: 6px;
                 font-size: 1rem;
                 box-sizing: border-box;
+                background-color: #ffffff;
+                transition: all 0.3s ease;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
             }
-            .form-group input:focus {
+            .form-group input:focus,
+            .form-group select:focus {
                 outline: none;
                 border-color: #4c95af;
+                box-shadow: 0 0 0 3px rgba(76, 149, 175, 0.1);
+            }
+            .form-group select {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236c757d' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 12px center;
+                padding-right: 40px;
+                cursor: pointer;
+            }
+            .form-group select:hover {
+                border-color: #4c95af;
+            }
+            .form-group select option {
+                padding: 10px;
+                background-color: #ffffff;
+                color: #131b48;
+            }
+            .form-group select option:hover {
+                background-color: #f8f9fa;
+            }
+            .form-group select option[value="__NEW__"] {
+                font-weight: 600;
+                color: #4c95af;
+                border-top: 1px solid #e1e5eb;
+                padding-top: 12px;
+                margin-top: 5px;
+            }
+            .form-group label {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .form-group small {
+                display: block;
+                margin-top: 5px;
+                color: #6c757d;
+                font-size: 0.85rem;
             }
             .form-buttons {
                 display: flex;
@@ -290,21 +338,26 @@ function showAddAuthorForm() {
     const formHTML = `
         <form id="add-author-form" onsubmit="saveAuthor(event, null)">
             <div class="form-group">
-                <label for="author-nom">Nom de l'auteur *</label>
+                <label for="author-nom">${translate("authors.name", "Nom de l'auteur *")}</label>
                 <input type="text" id="author-nom" name="nom" required>
             </div>
             <div class="form-group">
-                <label for="author-pays">Pays *</label>
+                <label for="author-pays">${translate("authors.country", "Pays *")}</label>
                 <input type="text" id="author-pays" name="pays" required>
             </div>
             <div class="form-buttons">
-                <button type="button" class="btn-cancel" onclick="closeModal()">Annuler</button>
-                <button type="submit" class="btn-save">Enregistrer</button>
+                <button type="button" class="btn-cancel" onclick="closeModal()">${translate("common.cancel", "Annuler")}</button>
+                <button type="submit" class="btn-save">${translate("common.save", "Enregistrer")}</button>
             </div>
         </form>
     `;
     
-    showModal('Ajouter un nouvel auteur', formHTML);
+    showModal(translate("authors.add.title", "Ajouter un nouvel auteur"), formHTML);
+    
+    // Appliquer les traductions après la création du modal
+    if (App && App.applyTranslations) {
+        App.applyTranslations();
+    }
 }
 
 // Fonction pour modifier un auteur
@@ -313,13 +366,13 @@ async function editAuthor(authorId) {
         // Charge le XML pour récupérer les données de l'auteur (avec cache buster)
         const cacheBuster = '?v=' + Date.now();
         const xmlResp = await fetch('data/authors.xml' + cacheBuster);
-        if (!xmlResp.ok) throw new Error("Failed to load authors.xml");
+        if (!xmlResp.ok) throw new Error(translate("authors.error.load.xml", "Failed to load authors.xml"));
         const xmlText = await xmlResp.text();
         const xmlDoc = new DOMParser().parseFromString(xmlText, 'application/xml');
         
         const author = xmlDoc.querySelector(`auteur[id="${authorId}"]`);
         if (!author) {
-            alert("Auteur non trouvé");
+            alert(translate("authors.not.found", "Auteur non trouvé"));
             return;
         }
         
@@ -329,24 +382,29 @@ async function editAuthor(authorId) {
         const formHTML = `
             <form id="edit-author-form" onsubmit="saveAuthor(event, '${authorId}')">
                 <div class="form-group">
-                    <label for="author-nom">Nom de l'auteur *</label>
+                    <label for="author-nom">${translate("authors.name", "Nom de l'auteur *")}</label>
                     <input type="text" id="author-nom" name="nom" value="${nom}" required>
                 </div>
                 <div class="form-group">
-                    <label for="author-pays">Pays *</label>
+                    <label for="author-pays">${translate("authors.country", "Pays *")}</label>
                     <input type="text" id="author-pays" name="pays" value="${pays}" required>
                 </div>
                 <div class="form-buttons">
-                    <button type="button" class="btn-cancel" onclick="closeModal()">Annuler</button>
-                    <button type="submit" class="btn-save">Enregistrer</button>
+                    <button type="button" class="btn-cancel" onclick="closeModal()">${translate("common.cancel", "Annuler")}</button>
+                    <button type="submit" class="btn-save">${translate("common.save", "Enregistrer")}</button>
                 </div>
             </form>
         `;
         
-        showModal('Modifier l\'auteur', formHTML);
+        showModal(translate("authors.edit.title", "Modifier l'auteur"), formHTML);
+        
+        // Appliquer les traductions après la création du modal
+        if (App && App.applyTranslations) {
+            App.applyTranslations();
+        }
     } catch (e) {
         console.error("Error loading author for edit", e);
-        alert("Erreur lors du chargement de l'auteur");
+        alert(translate("authors.load.error.edit", "Erreur lors du chargement de l'auteur"));
     }
 }
 
@@ -354,11 +412,11 @@ async function editAuthor(authorId) {
 async function saveAuthor(event, authorId) {
     event.preventDefault();
     
-    const nom = document.getElementById('author-nom').value;
-    const pays = document.getElementById('author-pays').value;
+    const nom = document.getElementById('author-nom').value.trim();
+    const pays = document.getElementById('author-pays').value.trim();
     
     if (!nom || !pays) {
-        alert("Veuillez remplir tous les champs");
+        alert(translate("authors.fill.all", "Veuillez remplir tous les champs"));
         return;
     }
     
@@ -366,7 +424,7 @@ async function saveAuthor(event, authorId) {
         // Charge le XML actuel (avec cache buster)
         const cacheBuster = '?v=' + Date.now();
         const xmlResp = await fetch('data/authors.xml' + cacheBuster);
-        if (!xmlResp.ok) throw new Error("Failed to load authors.xml");
+        if (!xmlResp.ok) throw new Error(translate("authors.error.load.xml", "Failed to load authors.xml"));
         const xmlText = await xmlResp.text();
         const xmlDoc = new DOMParser().parseFromString(xmlText, 'application/xml');
         
@@ -421,9 +479,9 @@ async function saveAuthor(event, authorId) {
         const saved = await saveXMLToFile('data/authors.xml', updatedXml);
         
         if (saved) {
-            alert(authorId ? "Auteur modifié avec succès et sauvegardé dans le fichier XML!" : "Auteur ajouté avec succès et sauvegardé dans le fichier XML!");
+            alert(authorId ? translate("authors.edit.success") : translate("authors.add.success"));
         } else {
-            alert(authorId ? "Auteur modifié avec succès! (Note: Le serveur de sauvegarde n'est pas disponible, les modifications seront perdues au rechargement)" : "Auteur ajouté avec succès! (Note: Le serveur de sauvegarde n'est pas disponible, les modifications seront perdues au rechargement)");
+            alert((authorId ? translate("authors.edit.success") : translate("authors.add.success")) + " " + translate("authors.server.unavailable"));
         }
         
         // Fermer la modal
@@ -434,13 +492,13 @@ async function saveAuthor(event, authorId) {
         
     } catch (e) {
         console.error("Error saving author", e);
-        alert("Erreur lors de la sauvegarde de l'auteur");
+        alert(translate("authors.save.error", "Erreur lors de la sauvegarde de l'auteur"));
     }
 }
 
 // Fonction pour supprimer un auteur
 async function deleteAuthor(authorId) {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cet auteur ?\nToutes les références à cet auteur dans les livres seront également supprimées.")) {
+    if (!confirm(translate("authors.delete.confirm", "Êtes-vous sûr de vouloir supprimer cet auteur ?\nToutes les références à cet auteur dans les livres seront également supprimées."))) {
         return;
     }
     
@@ -450,7 +508,7 @@ async function deleteAuthor(authorId) {
         
         // 1. Supprimer l'auteur de authors.xml
         const xmlResp = await fetch('data/authors.xml' + cacheBuster);
-        if (!xmlResp.ok) throw new Error("Failed to load authors.xml");
+        if (!xmlResp.ok) throw new Error(translate("authors.error.load.xml", "Failed to load authors.xml"));
         const xmlText = await xmlResp.text();
         const xmlDoc = new DOMParser().parseFromString(xmlText, 'application/xml');
         
@@ -471,7 +529,7 @@ async function deleteAuthor(authorId) {
             
             // 2. Remplacer toutes les références à cet auteur dans books.xml par "INDISPO"
             const booksResp = await fetch('data/books.xml' + cacheBuster);
-            if (!booksResp.ok) throw new Error("Failed to load books.xml");
+            if (!booksResp.ok) throw new Error(translate("books.error.load.xml", "Failed to load books.xml"));
             const booksText = await booksResp.text();
             const booksDoc = new DOMParser().parseFromString(booksText, 'application/xml');
             
@@ -505,9 +563,9 @@ async function deleteAuthor(authorId) {
             }
             
             if (authorsSaved) {
-                alert("Auteur supprimé avec succès !\nToutes les références à cet auteur dans les livres ont été supprimées.");
+                alert(translate("authors.delete.success", "Auteur supprimé avec succès !\nToutes les références à cet auteur dans les livres ont été supprimées."));
             } else {
-                alert("Auteur supprimé ! (Note: Le serveur de sauvegarde n'est pas disponible, les modifications seront perdues au rechargement)");
+                alert(translate("authors.delete.success", "Auteur supprimé !") + " " + translate("authors.server.unavailable"));
             }
             
             // Recharger la liste
@@ -515,6 +573,13 @@ async function deleteAuthor(authorId) {
         }
     } catch (e) {
         console.error("Error deleting author", e);
-        alert("Erreur lors de la suppression de l'auteur");
+        alert(translate("authors.delete.error", "Erreur lors de la suppression de l'auteur"));
     }
 }
+
+// Exposer globalement les fonctions pour les appels onclick dans XSL
+window.showAddAuthorForm = showAddAuthorForm;
+window.editAuthor = editAuthor;
+window.deleteAuthor = deleteAuthor;
+window.closeModal = closeModal;
+window.saveAuthor = saveAuthor;

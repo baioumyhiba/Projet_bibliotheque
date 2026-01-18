@@ -33,6 +33,18 @@
         <icon>👥</icon>
     </menu>
 
+    <menu id="manage_categories" roles="admin">
+        <label key="menu.manage_categories">Gestion Catégories</label>
+        <link>#categories</link>
+        <icon>🏷️</icon>
+    </menu>
+
+    <menu id="profile" roles="admin user auteur">
+        <label key="menu.profile">Mon Profil</label>
+        <link>#profile</link>
+        <icon>👤</icon>
+    </menu>
+
     <menu id="logout" roles="admin user auteur">
         <label key="menu.logout">Déconnexion</label>
         <link>#logout</link>
