@@ -478,6 +478,23 @@ async function saveAuthor(event, authorId) {
         // Sauvegarder sur le serveur
         const saved = await saveXMLToFile('data/authors.xml', updatedXml);
         
+        // Envoyer une notification via le pattern Observer (même si saved est false, l'action a été faite)
+        try {
+            if (window.NotificationCenter) {
+                const eventType = authorId ? 'AUTHOR_MODIFIED' : 'AUTHOR_ADDED';
+                console.log('Envoi notification:', eventType, nom);
+                await window.NotificationCenter.notify({
+                    eventType: eventType,
+                    data: { name: nom }
+                });
+                console.log('Notification envoyée avec succès');
+            } else {
+                console.error('NotificationCenter n\'est pas disponible');
+            }
+        } catch (error) {
+            console.error('Erreur lors de l\'envoi de la notification:', error);
+        }
+        
         if (saved) {
             alert(authorId ? translate("authors.edit.success") : translate("authors.add.success"));
         } else {
@@ -513,7 +530,12 @@ async function deleteAuthor(authorId) {
         const xmlDoc = new DOMParser().parseFromString(xmlText, 'application/xml');
         
         const author = xmlDoc.querySelector(`auteur[id="${authorId}"]`);
+        let authorName = authorId; // Fallback
         if (author) {
+            const nomEl = author.querySelector('nom');
+            if (nomEl) {
+                authorName = nomEl.textContent;
+            }
             author.parentNode.removeChild(author);
             
             // Convertir en XML string
@@ -560,6 +582,22 @@ async function deleteAuthor(authorId) {
                     updatedBooksXml = '<?xml version="1.0" encoding="UTF-8"?>\n' + updatedBooksXml;
                 }
                 await saveXMLToFile('data/books.xml', updatedBooksXml);
+            }
+            
+            // Envoyer une notification via le pattern Observer (même si saved est false)
+            try {
+                if (window.NotificationCenter) {
+                    console.log('Envoi notification AUTHOR_DELETED:', authorName);
+                    await window.NotificationCenter.notify({
+                        eventType: 'AUTHOR_DELETED',
+                        data: { name: authorName }
+                    });
+                    console.log('Notification envoyée avec succès');
+                } else {
+                    console.error('NotificationCenter n\'est pas disponible');
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi de la notification:', error);
             }
             
             if (authorsSaved) {

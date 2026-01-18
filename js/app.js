@@ -1,4 +1,7 @@
+
+
 const App = {
+    
     currentLang: localStorage.getItem('selectedLang') || 'fr', // Charge la langue sauvegardée ou 'fr' par défaut
     translations: {},
 
@@ -157,6 +160,9 @@ const App = {
         // Render Menu via XSLT
         await this.renderMenu(user.role);
         
+        // ✅ CHARGER LES NOTIFICATIONS ICI
+    setTimeout(loadNotifications, 200);
+
         // Afficher le message de bienvenue uniquement si on est sur la page d'accueil
         this.toggleWelcomeMessage(!window.location.hash || window.location.hash === '');
     },
@@ -446,4 +452,26 @@ window.navigate = async (hash) => {
     
     // Autres actions de navigation (modules etc)
     console.log("Navigating to", hash);
+
+
+// Initialiser les notifications au chargement du DOM
+document.addEventListener('DOMContentLoaded', () => {
+    const bell = document.getElementById('notif-bell');
+    const panel = document.getElementById('notification-panel');
+
+    if (bell && panel) {
+        bell.addEventListener('click', (e) => {
+            e.stopPropagation();
+            panel.classList.toggle('hidden');
+        });
+
+        // Fermer le panel si on clique en dehors
+        document.addEventListener('click', (e) => {
+            if (!bell.contains(e.target) && !panel.contains(e.target)) {
+                panel.classList.add('hidden');
+            }
+        });
+    }
+});
+
 };

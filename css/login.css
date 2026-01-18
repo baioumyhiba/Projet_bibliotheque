@@ -45,6 +45,211 @@
     border-radius: 3px;
 }
 
+/* =============================== */
+/* NOTIFICATION SYSTEM */
+/* =============================== */
+.notif-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.notif-bell {
+    position: relative;
+    padding: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.notif-bell:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.notif-bell:active {
+    transform: translateY(0);
+}
+
+.notif-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 12px;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.notif-count[style*="display: none"] {
+    display: none !important;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.notification-panel {
+    position: absolute;
+    right: 0;
+    top: 55px;
+    width: 350px;
+    max-height: 500px;
+    background: white;
+    border: 2px solid rgba(19, 27, 72, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    z-index: 9999;
+    overflow: hidden;
+    animation: slideDown 0.3s ease;
+}
+
+.notification-panel.hidden {
+    display: none;
+}
+
+.notification-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #131b48, #4c95af);
+}
+
+.notification-panel .empty {
+    color: #6c757d;
+    text-align: center;
+    padding: 30px 20px;
+    font-style: italic;
+}
+
+.notification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e1e5eb;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    background: white;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+    transform: translateX(-3px);
+}
+
+.notification-item.notif-read {
+    opacity: 0.7;
+}
+
+.notif-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.notif-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notif-message {
+    font-size: 14px;
+    color: #131b48;
+    margin: 0 0 6px 0;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.notif-time {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.notif-unread-dot {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 8px;
+    height: 8px;
+    background: #4c95af;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.notification-item.notif-type-success {
+    border-left: 4px solid #28a745;
+}
+
+.notification-item.notif-type-info {
+    border-left: 4px solid #4c95af;
+}
+
+.notification-item.notif-type-warning {
+    border-left: 4px solid #ffc107;
+}
+
+.notification-item.notif-type-error {
+    border-left: 4px solid #dc3545;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
 /* SELECTEUR DE LANGUE */
 .lang-switch {
     position: relative;
