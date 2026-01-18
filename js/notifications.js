@@ -170,29 +170,47 @@ const NotificationCenter = {
     async loadNotifications() {
         try {
             const user = Auth.checkSession();
-            if (!user) return;
+            if (!user) {
+                console.log('Aucun utilisateur connecté, notifications non chargées');
+                return;
+            }
+
+            console.log('Chargement des notifications pour:', user.username);
 
             // Récupérer toutes les notifications (userId="all" ou l'ID de l'utilisateur)
             const response = await fetch(`http://localhost:8000/notifications?userId=all`);
-            if (!response.ok) throw new Error('Erreur lors du chargement des notifications');
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
+            }
 
             const notifications = await response.json();
+            console.log('Notifications reçues du serveur:', notifications);
             
             // Filtrer les notifications pour cet utilisateur ou "all"
-            const userNotifications = notifications.filter(n => 
-                n.userId === 'all' || n.userId === user.id
+            const userNotifications = Array.isArray(notifications) ? notifications.filter(n => 
+                n.userId === 'all' || n.userId === user.id || n.userId === user.id.toString()
             ).sort((a, b) => {
-                // Trier par ID décroissant (les plus récentes en premier)
-                return b.id.localeCompare(a.id);
-            });
+                // Trier par timestamp décroissant (les plus récentes en premier)
+                const timestampA = a.timestamp || 0;
+                const timestampB = b.timestamp || 0;
+                return timestampB - timestampA;
+            }) : [];
 
-            // Afficher les notifications
+            console.log(`Notifications filtrées: ${userNotifications.length} notification(s)`);
+
+            // Afficher les notifications (même si le panel est caché, pour mettre à jour le compteur)
             this.displayNotifications(userNotifications);
             
             // Mettre à jour le compteur
             this.updateNotificationCount(userNotifications);
+            
         } catch (error) {
             console.error('Erreur lors du chargement des notifications:', error);
+            // Afficher un message d'erreur dans le panel seulement s'il est visible
+            const panel = document.getElementById('notification-panel');
+            if (panel && !panel.classList.contains('hidden')) {
+                panel.innerHTML = '<p class="empty" style="color: #dc3545;">Erreur: ' + error.message + '</p>';
+            }
         }
     },
 
@@ -202,9 +220,12 @@ const NotificationCenter = {
      */
     displayNotifications(notifications) {
         const panel = document.getElementById('notification-panel');
-        if (!panel) return;
+        if (!panel) {
+            console.warn('Panel de notifications non trouvé');
+            return;
+        }
 
-        if (notifications.length === 0) {
+        if (!notifications || notifications.length === 0) {
             panel.innerHTML = '<p class="empty">Aucune notification</p>';
             return;
         }

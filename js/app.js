@@ -161,7 +161,18 @@ const App = {
         await this.renderMenu(user.role);
         
         // ✅ CHARGER LES NOTIFICATIONS ICI
-    setTimeout(loadNotifications, 200);
+        if (typeof window.loadNotifications === 'function') {
+            setTimeout(() => {
+                window.loadNotifications();
+            }, 200);
+        }
+        
+        // Réinitialiser les event listeners des notifications après un court délai
+        setTimeout(() => {
+            if (typeof initNotifications === 'function') {
+                initNotifications();
+            }
+        }, 300);
 
         // Afficher le message de bienvenue uniquement si on est sur la page d'accueil
         this.toggleWelcomeMessage(!window.location.hash || window.location.hash === '');
@@ -454,24 +465,93 @@ window.navigate = async (hash) => {
     console.log("Navigating to", hash);
 
 
-// Initialiser les notifications au chargement du DOM
-document.addEventListener('DOMContentLoaded', () => {
+// Fonction pour initialiser les notifications
+function initNotifications() {
     const bell = document.getElementById('notif-bell');
     const panel = document.getElementById('notification-panel');
 
-    if (bell && panel) {
-        bell.addEventListener('click', (e) => {
-            e.stopPropagation();
-            panel.classList.toggle('hidden');
-        });
+    console.log('[initNotifications] Initialisation...', { bell: !!bell, panel: !!panel });
 
-        // Fermer le panel si on clique en dehors
-        document.addEventListener('click', (e) => {
-            if (!bell.contains(e.target) && !panel.contains(e.target)) {
-                panel.classList.add('hidden');
+    if (bell && panel) {
+        // Retirer l'ancien event listener s'il existe
+        const newBell = bell.cloneNode(true);
+        bell.parentNode.replaceChild(newBell, bell);
+        
+        // Ajouter le nouvel event listener
+        newBell.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            console.log('[notif-bell] Clic détecté');
+            
+            const currentPanel = document.getElementById('notification-panel');
+            if (!currentPanel) {
+                console.error('[notif-bell] Panel non trouvé');
+                return;
+            }
+            
+            const isHidden = currentPanel.classList.contains('hidden');
+            console.log('[notif-bell] État actuel:', { isHidden });
+            
+            currentPanel.classList.toggle('hidden');
+            console.log('[notif-bell] Nouvel état:', { isHidden: currentPanel.classList.contains('hidden') });
+            
+            // Recharger les notifications quand on ouvre le panel
+            const isNowHidden = currentPanel.classList.contains('hidden');
+            if (!isNowHidden && typeof window.loadNotifications === 'function') {
+                console.log('[notif-bell] Chargement des notifications...');
+                await window.loadNotifications();
             }
         });
+
+        // Fermer le panel si on clique en dehors (une seule fois, pas à chaque appel)
+        if (!window.notifClickOutsideListener) {
+            window.notifClickOutsideListener = (e) => {
+                // Petit délai pour éviter que le clic sur la cloche ferme immédiatement le panel
+                setTimeout(() => {
+                    const currentBell = document.getElementById('notif-bell');
+                    const currentPanel = document.getElementById('notification-panel');
+                    
+                    if (currentBell && currentPanel) {
+                        const clickedBell = currentBell.contains(e.target) || currentBell === e.target;
+                        const clickedPanel = currentPanel.contains(e.target) || currentPanel === e.target;
+                        
+                        // Ne fermer que si on clique vraiment en dehors ET que le panel est ouvert
+                        if (!clickedBell && !clickedPanel && !currentPanel.classList.contains('hidden')) {
+                            console.log('[notif-click-outside] Fermeture du panel');
+                            currentPanel.classList.add('hidden');
+                        }
+                    }
+                }, 100);
+            };
+            document.addEventListener('click', window.notifClickOutsideListener);
+        }
+        
+        console.log('[initNotifications] Event listeners ajoutés');
+    } else {
+        console.error('[initNotifications] Éléments non trouvés:', { bell: !!bell, panel: !!panel });
     }
-});
+    
+    // Recharger les notifications toutes les 30 secondes
+    if (typeof window.loadNotifications === 'function') {
+        setInterval(() => {
+            const currentPanel = document.getElementById('notification-panel');
+            // Recharger seulement si le panel est visible
+            if (currentPanel && !currentPanel.classList.contains('hidden')) {
+                window.loadNotifications();
+            }
+        }, 30000); // 30 secondes
+    }
+}
+
+// Initialiser les notifications au chargement du DOM
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNotifications);
+} else {
+    // DOM déjà chargé
+    initNotifications();
+}
+
+// La réinitialisation des notifications est déjà gérée dans App.showDashboard
+// Pas besoin de réécrire la fonction ici
 
 };

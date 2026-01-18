@@ -1,0 +1,50 @@
+[
+  {
+    "id": "notif_1768704759410",
+    "userId": "all",
+    "message": "📚 admin a ajouté le livre \":\"",
+    "type": "success",
+    "read": false,
+    "timestamp": 1768704759410
+  },
+  {
+    "id": "notif_1768704823218",
+    "userId": "all",
+    "message": "📚 admin a ajouté le livre \";:,kkl\"",
+    "type": "success",
+    "read": false,
+    "timestamp": 1768704823218
+  },
+  {
+    "id": "notif_1768704852770",
+    "userId": "all",
+    "message": "🗑️ auteur a supprimé le livre \";:,kkl\"",
+    "type": "warning",
+    "read": false,
+    "timestamp": 1768704852770
+  },
+  {
+    "id": "notif_1768705132241",
+    "userId": "all",
+    "message": "🗑️ admin a supprimé le livre \"oi\"",
+    "type": "warning",
+    "read": false,
+    "timestamp": 1768705132241
+  },
+  {
+    "id": "notif_1768705137758",
+    "userId": "all",
+    "message": "🗑️ admin a supprimé le livre \"m\"",
+    "type": "warning",
+    "read": false,
+    "timestamp": 1768705137758
+  },
+  {
+    "id": "notif_1768705142006",
+    "userId": "all",
+    "message": "🗑️ admin a supprimé le livre \":\"",
+    "type": "warning",
+    "read": false,
+    "timestamp": 1768705142006
+  }
+]

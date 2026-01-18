@@ -50,7 +50,7 @@
 /* =============================== */
 .notif-wrapper {
     position: relative;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     margin-right: 20px;
 }
@@ -129,13 +129,21 @@
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     padding: 0;
-    z-index: 9999;
-    overflow: hidden;
+    z-index: 10000;
+    overflow-y: auto;
+    overflow-x: hidden;
     animation: slideDown 0.3s ease;
+    display: block;
 }
 
 .notification-panel.hidden {
-    display: none;
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.notification-panel:not(.hidden) {
+    display: block !important;
+    visibility: visible !important;
 }
 
 .notification-panel::before {

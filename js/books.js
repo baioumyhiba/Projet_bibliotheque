@@ -3,22 +3,8 @@ let xmlData;
 let currentEditBook = null;
 let currentImageData = null; // Stocke l'image en Base64
 
-async function addLivre(req, res) {
-  const { title } = req.body;
-
-  // 1️⃣ Sauvegarde du livre (XML / JSON / DB)
-  // ...
-
-  // 2️⃣ Notification (OBSERVER)
-  await subject.notify('BOOK_ADDED', {
-    title,
-    users: ['user1', 'user2', 'user3']
-  });
-
-  res.json({ success: true });
-}
-
-module.exports = { addLivre };
+// Cette fonction addLivre n'est plus utilisée - le code est dans saveBook
+// module.exports supprimé car on est dans le navigateur, pas Node.js
 
 // Fonction pour sauvegarder le XML sur le serveur
 async function saveXMLToFile(filePath, xmlContent) {
@@ -436,10 +422,13 @@ async function loadBooks() {
         }, 100);
         
         // Charger les auteurs et remplacer les IDs par les noms
-        await enrichAuthorNames();
-        
-        // Charger les catégories et remplacer les IDs par les noms
-        await enrichCategories();
+        // Attendre un peu plus pour s'assurer que le DOM est complètement prêt
+        setTimeout(async () => {
+            console.log('[loadBooks] Début de enrichAuthorNames');
+            await enrichAuthorNames();
+            console.log('[loadBooks] Fin de enrichAuthorNames');
+            await enrichCategories();
+        }, 150);
         
         // Initialiser les event listeners après le chargement
         setTimeout(() => {
@@ -461,25 +450,39 @@ async function loadBooks() {
 // Fonction pour enrichir les noms d'auteurs
 async function enrichAuthorNames() {
     try {
+        console.log('[enrichAuthorNames] Début de la fonction');
         // Charger le fichier authors.xml (avec cache buster)
         const cacheBuster = '?v=' + Date.now();
         const authorsResp = await fetch('data/authors.xml' + cacheBuster);
         if (!authorsResp.ok) {
-            console.warn("Could not load authors.xml");
+            console.error("[enrichAuthorNames] Impossible de charger authors.xml:", authorsResp.status, authorsResp.statusText);
             return;
         }
         const authorsText = await authorsResp.text();
         const authorsDoc = new DOMParser().parseFromString(authorsText, 'application/xml');
         
+        // Vérifier les erreurs de parsing
+        const parserError = authorsDoc.querySelector('parsererror');
+        if (parserError) {
+            console.error("[enrichAuthorNames] Erreur de parsing XML:", parserError.textContent);
+            return;
+        }
+        
         // Créer un map des auteurs (ID -> nom)
         const authorsMap = new Map();
         const allAuthors = authorsDoc.getElementsByTagName('auteur');
+        console.log(`[enrichAuthorNames] Nombre d'auteurs trouvés dans authors.xml: ${allAuthors.length}`);
+        
         for (let i = 0; i < allAuthors.length; i++) {
             const author = allAuthors[i];
             const authorId = author.getAttribute('id');
             const nomEl = author.getElementsByTagName('nom')[0];
             if (authorId && nomEl) {
-                authorsMap.set(authorId, nomEl.textContent);
+                const authorName = nomEl.textContent.trim();
+                authorsMap.set(authorId, authorName);
+                console.log(`[enrichAuthorNames] Auteur chargé: ${authorId} -> ${authorName}`);
+            } else {
+                console.warn(`[enrichAuthorNames] Auteur #${i} manque d'ID ou de nom`);
             }
         }
         
@@ -487,41 +490,57 @@ async function enrichAuthorNames() {
         const authorElements = document.querySelectorAll('.book-author');
         let unavailableCount = 0;
         
-        authorElements.forEach(el => {
+        console.log(`[enrichAuthorNames] Trouvé ${authorElements.length} éléments .book-author`);
+        console.log(`[enrichAuthorNames] Map des auteurs chargés: ${authorsMap.size} auteurs`);
+        console.log(`[enrichAuthorNames] IDs d'auteurs dans la map:`, Array.from(authorsMap.keys()));
+        
+        authorElements.forEach((el, index) => {
             const auteurId = el.getAttribute('data-auteur-id');
             const nameSpan = el.querySelector('.auteur-name');
+            
+            if (!auteurId) {
+                console.warn(`[enrichAuthorNames] Élément .book-author #${index} n'a pas d'attribut data-auteur-id`);
+            }
+            
+            if (!nameSpan) {
+                console.warn(`[enrichAuthorNames] Élément .book-author #${index} n'a pas d'enfant .auteur-name`);
+            }
             
             if (auteurId && nameSpan) {
                 // Vérifier si c'est un auteur indisponible
                 if (auteurId === 'INDISPO') {
-                    nameSpan.textContent = translate("books.author.unavailable");
-                    nameSpan.style.color = '#dc3545'; // Rouge pour indiquer l'indisponibilité
+                    nameSpan.textContent = translate("books.author.unavailable", "Indisponible");
+                    nameSpan.style.color = '#dc3545';
                     nameSpan.style.fontStyle = 'italic';
                     unavailableCount++;
+                    console.log(`[enrichAuthorNames] Auteur ${auteurId} marqué comme indisponible`);
                 } else {
-                const authorName = authorsMap.get(auteurId);
-                if (authorName) {
-                    nameSpan.textContent = authorName;
-                        // Réinitialiser le style au cas où il était marqué comme indisponible avant
+                    const authorName = authorsMap.get(auteurId);
+                    if (authorName) {
+                        nameSpan.textContent = authorName;
                         nameSpan.style.color = '';
                         nameSpan.style.fontStyle = '';
-                } else {
+                        console.log(`[enrichAuthorNames] ✓ Auteur ${auteurId} -> ${authorName}`);
+                    } else {
                         // Auteur supprimé ou introuvable
-                        nameSpan.textContent = translate("books.author.unavailable");
-                        nameSpan.style.color = '#dc3545'; // Rouge pour indiquer l'indisponibilité
+                        nameSpan.textContent = translate("books.author.unavailable", "Indisponible");
+                        nameSpan.style.color = '#dc3545';
                         nameSpan.style.fontStyle = 'italic';
                         unavailableCount++;
+                        console.warn(`[enrichAuthorNames] ✗ Auteur ${auteurId} non trouvé dans authors.xml`);
                     }
                 }
             }
         });
         
-        console.log(`Author names enriched: ${authorsMap.size} authors loaded`);
+        console.log(`[enrichAuthorNames] Auteurs enrichis: ${authorsMap.size} auteurs chargés`);
+        console.log(`[enrichAuthorNames] ${authorElements.length - unavailableCount} noms d'auteurs affichés avec succès`);
         if (unavailableCount > 0) {
-            console.warn(`${unavailableCount} auteur(s) indisponible(s) (supprimé(s))`);
+            console.warn(`[enrichAuthorNames] ${unavailableCount} auteur(s) indisponible(s) (supprimé(s))`);
         }
     } catch (e) {
-        console.error("Error enriching author names", e);
+        console.error("[enrichAuthorNames] Erreur lors de l'enrichissement des noms d'auteurs:", e);
+        console.error("[enrichAuthorNames] Stack trace:", e.stack);
     }
 }
 

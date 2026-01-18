@@ -34,12 +34,16 @@ async function loadAuthors() {
                 
                 // Enrichir les livres après la transformation (petit délai pour s'assurer que le DOM est prêt)
                 setTimeout(() => {
-                    enrichBooks(booksDoc);
-                    // Appliquer les traductions aux nouveaux éléments créés
+                    console.log('[loadAuthors] Appel de enrichBooks après délai');
+                    // Appliquer les traductions d'abord
                     if (App && App.applyTranslations) {
                         App.applyTranslations();
                     }
-                }, 100);
+                    // Puis enrichir les livres (après les traductions pour éviter que les traductions remplacent les noms)
+                    setTimeout(() => {
+                        enrichBooks(booksDoc);
+                    }, 50);
+                }, 150);
             }
         } else {
             console.error("XSLTProcessor not supported in this browser.");
@@ -55,26 +59,47 @@ async function loadAuthors() {
 
 // Fonction pour enrichir les informations des livres
 function enrichBooks(booksDoc) {
+    console.log('[enrichBooks] Début de la fonction');
     const livreItems = document.querySelectorAll('.livre-item');
+    console.log(`[enrichBooks] Trouvé ${livreItems.length} éléments .livre-item`);
     
     // Créer un map de tous les livres pour un accès rapide
     const booksMap = new Map();
     const allBooks = booksDoc.getElementsByTagName('livre');
+    console.log(`[enrichBooks] Nombre de livres trouvés dans books.xml: ${allBooks.length}`);
+    
     for (let i = 0; i < allBooks.length; i++) {
         const book = allBooks[i];
         const bookId = book.getAttribute('idLivre');
         if (bookId) {
             booksMap.set(bookId, book);
+            console.log(`[enrichBooks] Livre chargé: ${bookId}`);
+        } else {
+            console.warn(`[enrichBooks] Livre #${i} n'a pas d'attribut idLivre`);
         }
     }
     
-    livreItems.forEach(item => {
+    console.log(`[enrichBooks] Map des livres: ${booksMap.size} livres`);
+    console.log(`[enrichBooks] IDs des livres dans la map:`, Array.from(booksMap.keys()));
+    
+    livreItems.forEach((item, index) => {
         const bookId = item.getAttribute('data-book-id');
-        if (!bookId) return;
+        if (!bookId) {
+            console.warn(`[enrichBooks] Élément .livre-item #${index} n'a pas d'attribut data-book-id`);
+            return;
+        }
         
         const book = booksMap.get(bookId);
         const livreTitre = item.querySelector('.livre-titre');
         const detailsDiv = item.querySelector('.livre-details');
+        
+        if (!livreTitre) {
+            console.warn(`[enrichBooks] Élément .livre-item #${index} (bookId: ${bookId}) n'a pas d'enfant .livre-titre`);
+        }
+        
+        if (!detailsDiv) {
+            console.warn(`[enrichBooks] Élément .livre-item #${index} (bookId: ${bookId}) n'a pas d'enfant .livre-details`);
+        }
         
         if (book && livreTitre && detailsDiv) {
             const titreEl = book.getElementsByTagName('titre')[0];
@@ -82,12 +107,15 @@ function enrichBooks(booksDoc) {
             const isbnEl = book.getElementsByTagName('isbn')[0];
             const disponibiliteEl = book.getElementsByTagName('disponibilite')[0];
             
-            const titre = titreEl ? titreEl.textContent : translate("authors.unknown.title", "Titre inconnu");
-            const annee = anneeEl ? anneeEl.textContent : '';
-            const isbn = isbnEl ? isbnEl.textContent : '';
-            const disponibilite = disponibiliteEl ? disponibiliteEl.textContent : '';
+            const titre = titreEl ? titreEl.textContent.trim() : translate("authors.unknown.title", "Titre inconnu");
+            const annee = anneeEl ? anneeEl.textContent.trim() : '';
+            const isbn = isbnEl ? isbnEl.textContent.trim() : '';
+            const disponibilite = disponibiliteEl ? disponibiliteEl.textContent.trim() : '';
             
+            // Retirer l'attribut data-i18n pour éviter que les traductions remplacent le texte
+            livreTitre.removeAttribute('data-i18n');
             livreTitre.textContent = titre;
+            console.log(`[enrichBooks] ✓ Livre ${bookId} -> ${titre}`);
             
             let detailsHTML = '';
             if (annee) {
@@ -103,10 +131,24 @@ function enrichBooks(booksDoc) {
             
             detailsDiv.innerHTML = detailsHTML || `<span class="livre-details">${translate("authors.no.info", "Aucune information supplémentaire")}</span>`;
         } else if (livreTitre && detailsDiv) {
+            // Retirer l'attribut data-i18n pour éviter que les traductions remplacent le texte
+            livreTitre.removeAttribute('data-i18n');
             livreTitre.textContent = `${translate("books.id.label", "Livre ID")}: ${bookId}`;
             detailsDiv.innerHTML = `<span class="livre-details">${translate("authors.book.not.found", "(Livre non trouvé)")}</span>`;
+            console.warn(`[enrichBooks] ✗ Livre ${bookId} non trouvé dans books.xml`);
         }
     });
+    
+    console.log(`[enrichBooks] Fonction terminée: ${livreItems.length} éléments traités`);
+    
+    // Réessayer une fois de plus après un court délai au cas où les éléments ne seraient pas encore dans le DOM
+    if (livreItems.length === 0) {
+        console.warn('[enrichBooks] Aucun élément .livre-item trouvé, nouvelle tentative dans 200ms');
+        setTimeout(() => {
+            console.log('[enrichBooks] Nouvelle tentative de chargement des livres');
+            enrichBooks(booksDoc);
+        }, 200);
+    }
 }
 
 // Fonction pour afficher une modal

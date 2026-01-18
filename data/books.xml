@@ -250,4 +250,4 @@
         </categories>
     </livre>
 
-<livre idLivre="L18"><titre>oi</titre><anneePublication>2026</anneePublication><description>po</description><image/><isbn/><disponibilite>true</disponibilite><authors><auteurRef id="A16"/></authors><categories/></livre><livre idLivre="L19"><titre>ss</titre><anneePublication>2026</anneePublication><description>sss</description><image/><isbn>999999999999999999999999</isbn><disponibilite>true</disponibilite><authors><auteurRef id="A17"/></authors><categories><categorieRef id="C4"/></categories></livre></livres>
+</livres>
